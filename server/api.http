@@ -1,0 +1,23 @@
+POST http://localhost:3001/auth/register
+Content-Type: application/json
+
+{
+    "email" : "oanh@example.com",
+    "username" : "tuan",
+    "password" : "huutuan"
+}
+
+###
+POST http://localhost:3001/auth/login
+Content-Type: application/json
+
+{
+    "email" : "tuan@example.com",
+    "password" : "123"
+}
+
+###
+GET http://localhost:3001/users
+
+###
+GET http://localhost:3001/auth/google
