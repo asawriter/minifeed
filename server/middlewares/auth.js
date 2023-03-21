@@ -1,32 +1,31 @@
-const { isLogout } = require("../auth");
+// import createError from "http-errors"
+// import { isLogout } from "../auth/index.js";
+// import { SESSION_ABSOLUTE_TIMEOUT } from "../configs/index.js";
 
-const authorized = (req, res, next) => {
-  if (!req.session?.user)
-    return res.status(401).json({ message: "You must be logged in" });
+// export const authorized = (req, res, next) => {
+//     if(!req.session?.user){
+//         return next(createError.Unauthorized('You must be logged in'))
+//     }
+//     return next();
+// } 
 
-  return next();
-};
+// export const guest = (req, res, next) => {
+//     if(req.session?.user){
+//         return next(createError.Unauthorized('You already logged in'))
+//     }
+//     return next();
+// }
 
-const guest = (req, res, next) => {
-  if (req.session?.user)
-    return res.status(401).json({ message: "You already logged in" });
+// export const statusActive = async (req, res, next) => {
+//     if(req.session?.user){
+//         const now = new Date(Date.now())
+//         const {createAt} = req.session.user;
 
-  return next();
-};
+//         if(now > createAt + SESSION_ABSOLUTE_TIMEOUT){
+//             await isLogout(req, res);
 
-const statusActice = async (req, res, next) => {
-  if (req.session?.user) {
-    const now = new Date(Date.now());
-    const { createdAt } = req.session.user;
-
-    if (now > createdAt + SESSION_ABSOLUTE_TIMEOUT) {
-      await isLogout(req, res);
-
-      return next(new Error("401 You must be logged in"));
-    }
-  }
-
-  return next();
-};
-
-module.exports = {authorized, guest, statusActice}
+//             return next(createError.Unauthorized('You must be logged in'))
+//         }
+//     }
+//     return next();
+// }

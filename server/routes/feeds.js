@@ -1,23 +1,14 @@
-const { Router } = require("express");
+import { Router } from "express";
+import {createFeed, getAllFeeds, getOneFeed, removeFeed, getSavedFeed, addSavedFeed, removeSavedFeed, getSavedFeeds} from "../controllers/index.js"
 const router = Router();
 
-const { createFeed } = require("../services/feedService");
-const { getUser } = require("../services/userService");
+router.post('/', createFeed)
+router.get('/', getAllFeeds)
+router.put("/saved/:feedId", addSavedFeed)
+router.get("/saved", getSavedFeed)
+router.get("/saved/all/:userId", getSavedFeeds)
+router.delete("/saved/:feedId", removeSavedFeed)
+router.get('/:feedId', getOneFeed)
+router.delete("/:feedId", removeFeed)
 
-router.post("/", async (req, res, next) => {
-  try {
-    const { text } = req.body;
-
-    if (!text) return res.status(400).json({ message: "Invalid inputs" });
-
-    const user = await getUser();
-    
-    const newFeed = await createFeed(text, user.id);
-    
-    return res.status(200).json({ message: "Create feed successfully", feed: newFeed });
-  } catch (error) {
-    return next(error);
-  }
-});
-
-module.exports = router;
+export default router;

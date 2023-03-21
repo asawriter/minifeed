@@ -1,0 +1,52 @@
+.profile {
+  display: flex;
+  justify-content: center;
+  margin: 100px auto;
+  border: 0.8px solid lightgray;
+  max-width: 450px;
+  position: relative;
+
+  .container {
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    // align-items: center;
+    gap: 20px;
+
+    img {
+      border-radius: 50%;
+      width: 120px;
+      height: 120px;
+    }
+
+    p {
+      span {
+        color: blueviolet;
+      }
+    }
+
+    .btns {
+      display: flex;
+      justify-content: space-between;
+      button {
+        border: none;
+        cursor: pointer;
+        padding: 10px;
+        border: 1px solid blueviolet;
+        font-weight: bold;
+        border-radius: 20px;
+        background-color: white;
+        color: blueviolet;
+        &:hover {
+          opacity: 0.8;
+          transition: all 0.3s linear;
+        }
+
+        &:first-child {
+          color: white;
+          background-color: blueviolet;
+        }
+      }
+    }
+  }
+}

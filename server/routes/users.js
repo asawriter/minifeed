@@ -1,15 +1,8 @@
-const { Router } = require("express");
-const { getAllUsers } = require("../services/UserService");
-const router = Router();
+import {Router} from "express"
+const router = Router()
+import {getUser, updateUser} from "../controllers/index.js"
 
-router.get("/", async (req, res, next) => {
-  try {
-    const users = await getAllUsers();
-    
-    return res.status(200).json(users);
-  } catch (error) {
-    return next(error);
-  }
-});
+router.get("/find/:userId", getUser)
+router.put("/:userId", updateUser)
 
-module.exports = router;
+export default router

@@ -1,0 +1,35 @@
+.update {
+  padding: 50px;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: white;
+
+  form {
+    padding: 20px;
+
+    input {
+      padding: 10px;
+      border: none;
+      outline: none;
+      outline: 1px solid blueviolet;
+      margin-bottom: 20px;
+      border-radius: 4px;
+      width: 100%;
+    }
+
+    button {
+      float: right;
+      padding: 10px 12px;
+      border-radius: 20px;
+      color: white;
+      font-weight: bold;
+      background-color: blueviolet;
+      border: none;
+      cursor: pointer;
+    }
+  }
+}

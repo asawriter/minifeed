@@ -1,0 +1,58 @@
+.section {
+  padding: 20px 24px;
+  background-color: #dae0e6;
+  display: flex;
+  justify-content: center;
+
+  .sectionContainer {
+    max-width: 880px;
+    width: 880px;
+    display: flex;
+
+    .left {
+      flex: 2;
+
+      .create {
+        padding: 8px;
+        border: 0.8px solid lightgray;
+        height: 60px;
+        margin-bottom: 16px;
+        background-color: white;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+
+        .avatar {
+          img {
+            width: 38px;
+            height: 38px;
+            object-fit: cover;
+            border-radius: 50%;
+          }
+        }
+
+        input {
+          height: 38px;
+          border: none;
+          outline: none;
+          width: 100%;
+          background-color: #f6f7f8;
+          padding-left: 14px;
+          border-radius: 5px;
+          cursor: pointer;
+          outline: 0.8px solid #f6f7f8;
+
+          &:hover {
+            outline-color: blueviolet;
+            transition: all 0.3s linear;
+          }
+        }
+      }
+    }
+
+    .right {
+      flex: 1;
+      margin-left: 24px;
+    }
+  }
+}

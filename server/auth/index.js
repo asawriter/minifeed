@@ -1,26 +1,21 @@
-const { getUserByEmail } = require("../services/UserService");
-const { SESSION_NAME } = require("../configs/session");
+import { SESSION_NAME } from "../configs/index.js"
 
-const isLogin = async (req, email) => {
-  const user = await getUserByEmail(email);
+export const isLogin = async (req, data) => {
+    if(!req.session?.user){
+        req.session.user = {
+            userId : data.id,
+            username : data.username,
+            createdAt : new Date(Date.now())
+        }
+    }
+}
 
-  if (!req.session?.user) {
-    req.session.user = {
-      userId: user.id,
-      createAt: new Date(Date.now()),
-    };
-  }
-};
-
-const isLogout = async (req, res) =>
-  new Promise((resolve, reject) => {
+export const isLogout = async (req, res) => new Promise((resolve, reject) => {
     req.session?.destroy((err) => {
-      if (err) reject(err);
+        if(err) reject(err)
 
-      res.clearCookie(SESSION_NAME);
+        res.clearCookie(SESSION_NAME)
 
-      resolve();
-    });
-  });
-
-module.exports = { isLogin, isLogout };
+        resolve()
+    })
+})

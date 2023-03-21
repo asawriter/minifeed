@@ -1,0 +1,15 @@
+.home {
+  .backToTop {
+    transition: all 0.3s linear;
+    font-weight: bold;
+    padding: 8px 10px;
+    border-radius: 20px;
+    color: white;
+    background-color: blueviolet;
+    cursor: pointer;
+    border: none;
+    position: fixed;
+    bottom: 20px;
+    right: 50px;
+  }
+}

@@ -1,10 +1,8 @@
-const { hashSync, compare, genSaltSync } = require("bcryptjs");
+import bcrypt from "bcryptjs"
 
-const hashPw = (pw) => {
-  const salt = genSaltSync(10);
-  return hashSync(pw, salt);
-};
+export const hashPw = async (pw) => {
+    const salt = await bcrypt.genSalt(10);
+    return await bcrypt.hash(pw, salt);
+}
 
-const comparePw = async (raw, pw) => await compare(raw, pw);
-
-module.exports = { hashPw, comparePw };
+export const comparePw = async (raw, pw) => await bcrypt.compare(raw, pw);

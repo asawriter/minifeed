@@ -1,19 +1,28 @@
-const RedisStore = require("connect-redis").default;
-const redisClient = require("./redis");
+import { IN_PROD } from "./app.js";
 
-const SESSION_NAME = 'sid'
-const SESSION_ABSOLUTE_TIMEOUT = 1000 * 60 * 60 * 24;
+const ONE_HOUR = 1000 * 60 * 60;
 
-const SESSION_OPTIONS = {
-  name: SESSION_NAME,
-  secret: "secret",
-  resave: false,
-  saveUninitialized: true,
-  cookie: {
-    httpOnly: true,
-    maxAge: 1000 * 60 * 60,
-  },
-  store: new RedisStore({ client: redisClient }),
-};
+const THIRTY_MINUTES = ONE_HOUR / 2;
 
-module.exports = {SESSION_OPTIONS, SESSION_NAME, SESSION_ABSOLUTE_TIMEOUT};
+const SIX_HOURS = ONE_HOUR * 6;
+
+export const {
+    SESSION_NAME = 'sid',
+    SESSION_SECRET = 'sdnfls',
+    SESSION_TIMEOUT_IDLE = THIRTY_MINUTES
+} = process.env;
+
+export const SESSION_ABSOLUTE_TIMEOUT = SIX_HOURS;
+
+export const SESSION_OPTIONS = {
+    name : SESSION_NAME,
+    secret : SESSION_SECRET,
+    cookie : {
+        httpOnly : true,
+        maxAge : SESSION_TIMEOUT_IDLE,
+        sameSite : true,
+        secure : IN_PROD
+    },
+    resave : false,
+    saveUninitialized : false,
+}

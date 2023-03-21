@@ -1,0 +1,21 @@
+.savedFeeds {
+  display: flex;
+  background-color: #dae0e6;
+  justify-content: center;
+  padding: 50px 0;
+  min-height: calc(100vh - 50px);
+
+  .savedFeedsContainer {
+    max-width: 880px;
+    width: 880px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+
+    .feed{
+        max-width: 440px;
+        width: 400px;
+        height: fit-content;
+    }
+  }
+}
