@@ -15,8 +15,6 @@ const Feed = ({ feed }) => {
   const { title, feedId, name, createdFeed, content, image, author, avatar } =
     feed;
   const { currentUser, successMessage } = useContext(AuthContext);
-  const [openOptions, setOpenOptions] = useState(false);
-  const [saveFeed, setSaveFeed] = useState(false);
   const queryClient = useQueryClient();
 
   // HANDLE REMOVE FEED

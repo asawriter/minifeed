@@ -18,7 +18,7 @@ export const getAllFeeds = async (req, res, next) => {
 export const getFeedByUserId = async (req, res, next) => {
   try {
     const [feeds] = await db.query(
-      "Select * from feeds where userId = ? order by created_at desc",
+      "Select feeds.id as feedId, name, avatar, title, content, image, feeds.created_at as createdFeed, author from users join feeds on users.id = feeds.author where users.id = ? order by feeds.created_at Desc",
       [req.params.userId]
     );
 
@@ -35,7 +35,7 @@ export const getFeedByUserId = async (req, res, next) => {
 export const getFeedById = async (req, res, next) => {
   try {
     const [feed] = await db.query(
-      "Select feeds.id as feedId, name, avatar, title, content, image, feeds.created_at as createdFeed, author from users join feeds on users.id = feeds.author where feeds.id = ? order by feeds.created_at Desc",
+      "Select feeds.id as feedId, name, bio, avatar, title, content, image, feeds.created_at as createdFeed, users.created_at as createdUser, author from users join feeds on users.id = feeds.author where feeds.id = ? order by feeds.created_at Desc",
       [req.params.feedId]
     );
 

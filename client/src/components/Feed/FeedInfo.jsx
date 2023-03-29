@@ -6,12 +6,12 @@ const FeedInfo = ({avatar, author, name, createdFeed}) => {
     <div className="info">
           <img src={"/images/" + (avatar || "default_avatar.png")} alt="" />
           <p>
-            <Link to={`/profile/${author}`} className="link">
-              <span>{name}</span>
+            <Link to={`/users/${author}`} className="link">
+              <span style={{fontWeight: "600" }}>{name}</span>
             </Link>
 
-            <span style={{ fontSize: "12px" }}>
-              {moment(createdFeed).fromNow()}
+            <span style={{ fontSize: "12px", fontWeight: "400" }}>
+              {`${moment(createdFeed).format("MMM D")} (${moment(createdFeed).fromNow()})`}
             </span>
           </p>
         </div>

@@ -39,7 +39,11 @@ const Navbar = () => {
           {currentUser ? (
             <>
               <Link className="link" to="/create/post">
-                <p>Create Post</p>
+                <button
+                  style={{ backgroundColor: "#fff", color: "blueviolet" }}
+                >
+                  Create Post
+                </button>
               </Link>
               <div className="account">
                 <img
@@ -49,22 +53,23 @@ const Navbar = () => {
                 />
                 {openOptions && (
                   <ul onClick={() => setOpenOptions(!openOptions)}>
-                    <Link
-                      to={`/profile/${currentUser.userId}`}
-                      className="link"
-                    >
+                    <Link to={`/users/${currentUser.id}`} className="link">
                       <li>
                         <MdOutlineAccountCircle className="icon" />
-                        <span>{currentUser.username}</span>
+                        <span>{currentUser.name}</span>
                       </li>
                     </Link>
                     <li>
                       <MdOutlineSettings className="icon" />
-                      <span>Settings & privacy</span>
+                      <span>Reading List</span>
                     </li>
                     <li>
                       <MdOutlineFeedback className="icon" />
-                      <span>Settings & privacy</span>
+                      <span>Settings</span>
+                    </li>
+                    <li>
+                      <MdOutlineFeedback className="icon" />
+                      <span>Dashboard</span>
                     </li>
                     <li onClick={handleLogout}>
                       <MdOutlineLogout className="icon" />

@@ -48,7 +48,7 @@ export const GetSaved = (QUERY_KEY) => {
 export const GetFeedProfiles = (QUERY_KEY, userId) => {
   try {
     return useQuery([QUERY_KEY, userId], () =>
-      makeRequest.get(`/feeds/profile/${userId}`).then((res) => res.data.feeds)
+      makeRequest.get(`/feeds/user/${userId}`).then((res) => res.data.feeds)
     );
   } catch (error) {
     console.log(error);

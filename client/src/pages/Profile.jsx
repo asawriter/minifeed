@@ -1,12 +1,14 @@
 import { Link, useLocation } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
-import Update from "../components/Update";
-import { BiDotsVerticalRounded } from "react-icons/bi";
-import { RxBookmark, RxBookmarkFilled } from "react-icons/rx";
-import moment from "moment";
 import { GetUserProfile, GetFeedProfiles } from "../services/fetch";
 import { scrollUp } from "../services/BackToTop";
+import UserInfo from "../components/UserInfo";
+import { BsThreeDots } from "react-icons/bs";
+import Feed from "../components/Feed";
+import { VscComment } from "react-icons/vsc";
+import { CiHashtag } from "react-icons/ci";
+import { BsFileEarmarkPostFill } from "react-icons/bs";
 
 const Profile = () => {
   const { currentUser } = useContext(AuthContext);
@@ -40,108 +42,67 @@ const Profile = () => {
           Back To Top
         </button>
       )}
+
       {isLoading ? (
         <p>Loading ...</p>
       ) : error ? (
         <p>Somethings wents wrong ...</p>
       ) : (
-        <div className="container">
-          <div className="left">
-            <img
-              src={"/images/" + (data.profilePic || "default_avatar.png")}
-              alt=""
-            />
-            <p className="username">
-              Name : <span>{data.username}</span>
-            </p>
-            <p className="email">
-              Email : <span>{data.email}</span>
-            </p>
-            {currentUser.username === data.username && (
-              <div className="btns">
-                <button onClick={() => setOpenUpdate(true)}>
-                  Edit Profile
-                </button>
-                <button>New Post</button>
-              </div>
-            )}
-          </div>
-
-          <div className="right">
-            {feedLoading ? (
-              <p>Loading ...</p>
-            ) : feedError ? (
-              <p>Somethings went wrong</p>
-            ) : feedData.length < 1 ? (
-              <p style={{ textAlign: "center", fontSize: "20px" }}>
-                You dont't have saved feeds !!!
-              </p>
-            ) : (
-              feedData.map((feed) => {
-                return (
-                  <div className="feed" key={feed.id}>
-                    <div className="top">
-                      <div className="top-left">
-                        <img
-                          src={
-                            "/images/" +
-                            (data.profilePic || "default_avatar.png")
-                          }
-                          alt=""
-                        />
-                        <p>
-                          * Posted by
-                          <span
-                            style={{
-                              color: "blueviolet",
-                              margin: "0 5px",
-                              fontSize: "14px",
-                            }}
-                          >
-                            <Link
-                              to={`/profile/${currentUser.userId}`}
-                              className="link"
-                            >
-                              {data.username}
-                            </Link>
-                          </span>
-                          <span style={{ fontSize: "10px" }}>
-                            {moment(feed.created_at).fromNow()}
-                          </span>
-                        </p>
-                      </div>
-                      <div className="top-right">
-                        {feed.saved ? (
-                          <RxBookmarkFilled
-                            className="icon"
-                            style={{ color: "goldenrod" }}
-                          />
-                        ) : (
-                          <RxBookmark className="icon" />
-                        )}
-                        <BiDotsVerticalRounded className="icon" />
-                      </div>
-                    </div>
-
-                    <div className="content">
-                      <p>{feed.content}</p>
-                      {feed.feedImg && (
-                        <div className="imgContainer">
-                          <img src={"/images/" + feed.feedImg} alt="" />
-                        </div>
-                      )}
-                    </div>
-                    <Link to={`/feeds/${feed.id}`} className="link">
-                      <span className="view-feed">View Feed</span>
+        <>
+          <div className="background"></div>
+          <div className="container">
+            <div className="userMain">
+              <div className="userActions">
+                {currentUser.id === userId ? (
+                  <button>
+                    <Link className="link" to={`/users/${userId}/edit`}>
+                      Edit Profile
                     </Link>
-                  </div>
-                );
-              })
-            )}
-          </div>
+                  </button>
+                ) : (
+                  <button>Follow</button>
+                )}
+                <BsThreeDots className="icon" />
+              </div>
+              <img
+                src={"/images/" + (data.avatar || "default_avatar.png")}
+                alt=""
+              />
+              <h1>{data.name}</h1>
+              <UserInfo bio={data.bio} createdUser={data.created_at} />
+            </div>
 
-          {openUpdate && <Update setOpenUpdate={setOpenUpdate} />}
-        </div>
+            <div className="userContent">
+              <div className="left">
+                <ul>
+                  <li>
+                    <BsFileEarmarkPostFill className="icon" />
+                    <span>147 posts published</span>
+                  </li>
+                  <li>
+                    <VscComment className="icon" />
+                    <span>21 comments written</span>
+                  </li>
+                  <li>
+                    <CiHashtag className="icon" />
+                    <span>11 tags followed</span>
+                  </li>
+                </ul>
+              </div>
+              <div className="right">
+                {feedLoading ? (
+                  <p>Loading</p>
+                ) : feedError ? (
+                  <p>Somethings went wrong ...</p>
+                ) : (
+                  feedData.map((feed) => {
+                    return <Feed key={feed.feedId} feed={feed} />;
+                  })
+                )}
+              </div>
+            </div>
+          </div>
+        </>
       )}
     </div>
   );

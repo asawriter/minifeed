@@ -1,47 +1,53 @@
 import moment from "moment";
 import { useState } from "react";
-import { GetComments } from "../services/fetch";
-import ReplyComment from "./ReplyComment";
+import { AiOutlineHeart } from "react-icons/ai";
+import { VscComment } from "react-icons/vsc";
+import CreateComment from "./CreateComment";
 
-const Comment = ({comment}) => {
-  const {avatar, name, content, createdComment} = comment;
-  const [openComment, setOpenComment] = useState(false);
-
-  const { isLoading, data, error } = GetComments("replyCms", comment.parentId);
-
-  console.log(data);
+const Comment = ({ comment }) => {
+  const { avatar, name, content, createdComment, parentFeed, author } = comment;
+  const [openReplyCm, setOpenReplyCm] = useState(false);
 
   return (
     <div className="comment">
       <div className="imgContainer">
-        <img
-          src={"/images/" + avatar || "default_avatar.png"}
-          alt=""
-        />
+        <img src={"/images/" + (avatar || "default_avatar.png")} alt="" />
       </div>
+
       <div className="info">
-        <div className="name">
-          <span>{name}</span>
+        <div className="namecontent">
+          <div className="name">
+            <b>{name}</b>
+            <span>{moment(createdComment).format("MMM D")}</span>
+          </div>
+
           <p>{content}</p>
         </div>
 
         <div className="details">
-          <span>{moment(createdComment).fromNow()}</span>
-          {!openComment ? (
-            <span onClick={() => setOpenComment(true)}>Reply</span>
+          <p>
+            <AiOutlineHeart className="iconCm" /> <span>0 like</span>
+          </p>
+          {!openReplyCm ? (
+            <p onClick={() => setOpenReplyCm(true)}>
+              <VscComment className="iconCm" /> <span>reply</span>
+            </p>
           ) : (
-            <span onClick={() => setOpenComment(false)}>Close</span>
+            <p onClick={() => setOpenReplyCm(false)}>
+              <VscComment className="iconCm" />
+              <span>close</span>
+            </p>
           )}
         </div>
 
-        {openComment && (
-          <ReplyComment
-            feedId={comment.parentId}
-          
-            setOpenComment={setOpenComment}
+        {openReplyCm && (
+          <CreateComment
+            typeBtn="Reply"
+            parentFeed={parentFeed}
+            author={author}
+            setOpenComment={setOpenReplyCm}
           />
         )}
-        {/* <div className="replyCms">{isReply && <Comment />}</div> */}
       </div>
     </div>
   );

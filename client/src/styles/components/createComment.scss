@@ -1,6 +1,7 @@
 form {
   width: 100%;
-  margin-bottom: 20px;
+  margin: 10px 0;
+
   textarea {
     border: none;
     border: 0.8px solid lightgray;
@@ -10,6 +11,7 @@ form {
     border-radius: 4px;
     padding: 10px;
     font-size: 14px;
+    font-weight: 500;
     height: 150px;
     &:focus {
       outline-color: blueviolet;

@@ -10,7 +10,7 @@ import {
 
 router.get("/:userId", getUserById);
 
-router.put("/:userId", updateUser);
+router.patch("/:userId", updateUser);
 
 router.get("/:userId/bookmarks", getBookmarks);
 

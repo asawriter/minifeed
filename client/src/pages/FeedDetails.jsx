@@ -33,7 +33,6 @@ const FeedDetails = () => {
   const [backToTop, setBackToTop] = useState(false);
   const [saveFeed, setSaveFeed] = useState(false);
   const [openOptions, setOpenOptions] = useState(false);
-  const [isReply, setIsReply] = useState(false);
 
   // BUTTON SCROLL TO TOP
   useEffect(() => {
@@ -124,12 +123,13 @@ const FeedDetails = () => {
                 <p>
                   Comment as <span>{currentUser.name}</span>
                 </p>
-                <CreateComment parentFeed={feedId} author={currentUser.id}/>
+                <CreateComment parentFeed={feedId} author={currentUser.id} typeBtn="Submit"/>
               </div>
 
-              <ListComment feedId={feedId} />
+              <ListComment feedId={feedId}/>
             </div>
-            <FeedRightDetail />
+            
+            <FeedRightDetail avatar={data.avatar} author={data.author} name={data.name} createdUser={data.createdUser}/>
           </>
         )}
       </div>

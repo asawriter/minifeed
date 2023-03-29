@@ -1,12 +1,9 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import React, { useContext, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
+import React, { useState } from "react";
 import makeRequest from "../services/makeRequest";
 
-const CreateComment = ({ parentFeed, author }) => {
+const CreateComment = ({ parentFeed, author, typeBtn }) => {
   const [content, setContent] = useState("");
-  // const feedId = useLocation().pathname?.split("/")[2];
   const queryClient = useQueryClient();
 
   const mutaion = useMutation(
@@ -36,7 +33,7 @@ const CreateComment = ({ parentFeed, author }) => {
         value={content}
         onChange={(e) => setContent(e.target.value)}
       />
-      <button onClick={handleComment}>Comment</button>
+      <button onClick={handleComment}>{typeBtn}</button>
     </form>
   );
 };

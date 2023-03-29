@@ -1,7 +1,7 @@
 import { GetComments } from "../../services/fetch/loadComments";
 import Comment from "../Comment";
 
-const ListComment = ({ feedId }) => {
+const ListComment = ({ feedId, type }) => {
   const { isLoading, data, error } = GetComments("comments", feedId);
 
   return (
