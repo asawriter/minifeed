@@ -1,5 +1,5 @@
-import { BsFileImage } from "react-icons/bs";
-import { TiAttachmentOutline } from "react-icons/ti";
+import { RxBookmark } from "react-icons/rx";
+import { AiOutlineHome, AiOutlineMessage, AiOutlinePlus } from "react-icons/ai";
 import Feeds from "./Feeds";
 import Sidebar from "./Sidebar";
 import { useContext } from "react";
@@ -13,23 +13,33 @@ const Section = () => {
     <div className="section">
       <div className="sectionContainer">
         <div className="left">
-          <Link className="link" to="/create/post">
-            <div className="create">
-              <div className="avatar">
-                <img src={currentUser.profilePic} alt="" />
-              </div>
-              <input type="text" placeholder="Create Post" readOnly />
-              <BsFileImage style={{ fontSize: "22px", cursor: "pointer" }} />
-              <TiAttachmentOutline
-                style={{
-                  fontSize: "22px",
-                  cursor: "pointer",
-                  marginLeft: "-10px",
-                }}
-              />
-            </div>
-          </Link>
+          <ul>
+            <Link className="link" to="/">
+              <li>
+                <AiOutlineHome className="icon"/>
+                <span>Home</span>
+              </li>
+            </Link>
+            <li>
+              <AiOutlineMessage className="icon"/>
+              <span>Message</span>
+            </li>
+            <Link to="/create/post" className="link">
+              <li>
+                <AiOutlinePlus className="icon"/>
+                <span>Create Post</span>
+              </li>
+            </Link>
+            <Link to={`/saved/feeds/${currentUser.userId}`} className="link">
+              <li>
+                <RxBookmark className="icon"/>
+                <span>Saved Feeds</span>
+              </li>
+            </Link>
+          </ul>
+        </div>
 
+        <div className="center">
           <Feeds />
         </div>
 

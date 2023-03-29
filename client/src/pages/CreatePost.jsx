@@ -6,6 +6,7 @@ import { AuthContext } from "../context/AuthContext.js";
 
 const CreatePost = () => {
   const { currentUser, successMessage, errorMessage } = useContext(AuthContext);
+  const [title, setTitle] = useState("")
   const [content, setContent] = useState("");
   const [file, setFile] = useState(null);
   const queryClient = useQueryClient();
@@ -40,7 +41,7 @@ const CreatePost = () => {
   const handlePost = async(e) => {
     e.preventDefault();
     let feedImgUrl = file ? await upload(file) : null
-    mutation.mutate({ content, userId: currentUser.userId, feedImg : feedImgUrl });
+    mutation.mutate({ title, content, author: currentUser.id, image : feedImgUrl });
     navigate("/");
   };
 
@@ -49,15 +50,16 @@ const CreatePost = () => {
       <div className="container">
           <h2>Create New Post</h2>
           <form>
-            <textarea cols="30" rows="10" autoFocus value={content} onChange={(e) => setContent(e.target.value)} />
             <p>
               <label htmlFor="inputTag">
                 Select Image
                 <input id="inputTag" type="file" placeholder="Choose a image ..." accept="image/*" onChange={(e) => setFile(e.target.files[0])} />
               </label>
+              {file && <img src={URL.createObjectURL(file)} alt="" />}
               {file && <span onClick={() => setFile(null)}>Delete Image</span>}
             </p>
-            {file && <img src={URL.createObjectURL(file)} alt="" />}
+            <input type="text" placeholder="New feed title here..." value={title} onChange={(e) => setTitle(e.target.value)}/>
+            <textarea placeholder="Write something here..." autoFocus value={content} onChange={(e) => setContent(e.target.value)} />
             <button onClick={handlePost}>Post</button>
           </form>
         </div>

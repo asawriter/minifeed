@@ -16,7 +16,7 @@ const App = () => {
   const { currentUser } = useContext(AuthContext);
 
   const PrivateRoute = () => {
-    return currentUser ? <Outlet /> : <Navigate to="/login" />;
+    return currentUser?.email ? <Outlet /> : <Navigate to="/login" />;
   };
 
   return (
@@ -25,7 +25,7 @@ const App = () => {
       <Routes>
         <Route element={<PrivateRoute />}>
           <Route path="/" element={<Home />} />
-          <Route path="/feeds/:feedId" element={<FeedDetails />} />
+          <Route path="/feeds/:titleURL/:feedId" element={<FeedDetails />} />
           <Route path="/profile/:userId" element={<Profile />} />
           <Route path="/create/post" element={<CreatePost />} />
           <Route path="/saved/feeds/:userId" element={<SavedFeeds />} />

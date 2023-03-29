@@ -1,12 +1,19 @@
 .update {
   padding: 50px;
   position: absolute;
-  width: 100%;
+  height: calc(100vh - 100px);
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   background-color: white;
+
+  img {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    margin-top: 20px;
+  }
 
   form {
     padding: 20px;
@@ -19,6 +26,37 @@
       margin-bottom: 20px;
       border-radius: 4px;
       width: 100%;
+    }
+
+    p {
+      display: flex;
+      align-items: center;
+      gap: 100px;
+      cursor: pointer;
+
+
+      label {
+        padding: 8px 16px;
+        border: 1px solid lightgray;
+        cursor: pointer;
+        font-size: 14px;
+        &:hover {
+          cursor: pointer;
+          text-decoration: underline;
+        }
+
+        input {
+          display: none;
+        }
+      }
+
+      span {
+        font-size: 14px;
+        &:hover {
+          cursor: pointer;
+          text-decoration: underline;
+        }
+      }
     }
 
     button {

@@ -1,22 +1,16 @@
-import { useQuery } from "@tanstack/react-query";
 import moment from "moment";
 import React, { useContext } from "react";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { RxBookmark, RxBookmarkFilled } from "react-icons/rx";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import makeRequest from "../services/makeRequest";
+import { GetFeedSaveds } from "../services/fetch";
 
 const SavedFeeds = () => {
   const { currentUser } = useContext(AuthContext);
 
-  const { isLoading, data, error } = useQuery(["savedFeeds"], () =>
-    makeRequest
-      .get(`/feeds/saved`)
-      .then((res) => res.data.savedFeeds)
-  );
-
-  console.log(data);
+  const { isLoading, data, error } = GetFeedSaveds("savedFeeds")
+  
   return (
     <div className="savedFeeds">
       <div className="savedFeedsContainer">

@@ -1,8 +1,21 @@
-import {Router} from "express"
-const router = Router()
-import {getUser, updateUser} from "../controllers/index.js"
+import { Router } from "express";
+const router = Router();
+import {
+  getUserById,
+  updateUser,
+  getBookmarks,
+  followUser,
+  unFollowUser,
+} from "../controllers/index.js";
 
-router.get("/find/:userId", getUser)
-router.put("/:userId", updateUser)
+router.get("/:userId", getUserById);
 
-export default router
+router.put("/:userId", updateUser);
+
+router.get("/:userId/bookmarks", getBookmarks);
+
+router.put("/follow", followUser);
+
+router.put("/unfollow", unFollowUser);
+
+export default router;

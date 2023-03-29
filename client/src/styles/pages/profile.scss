@@ -1,52 +1,82 @@
 .profile {
   display: flex;
   justify-content: center;
-  margin: 100px auto;
   border: 0.8px solid lightgray;
-  max-width: 450px;
-  position: relative;
+  background-color: #dae0e6;
+  min-height: calc(100vh - 50px);
+  padding: 50px 0;
+
+  .backToTop {
+    transition: all 0.3s linear;
+    font-weight: bold;
+    padding: 8px 10px;
+    border-radius: 20px;
+    color: white;
+    background-color: blueviolet;
+    cursor: pointer;
+    border: none;
+    position: fixed;
+    bottom: 20px;
+    right: 50px;
+  }
 
   .container {
-    padding: 50px;
+    max-width: 880px;
+    width: 880px;
     display: flex;
-    flex-direction: column;
-    // align-items: center;
     gap: 20px;
+    position: relative;
 
-    img {
-      border-radius: 50%;
-      width: 120px;
-      height: 120px;
-    }
-
-    p {
-      span {
-        color: blueviolet;
-      }
-    }
-
-    .btns {
+    .left {
+      flex: 1;
+      background-color: white;
+      padding: 50px;
       display: flex;
-      justify-content: space-between;
-      button {
-        border: none;
-        cursor: pointer;
-        padding: 10px;
-        border: 1px solid blueviolet;
-        font-weight: bold;
-        border-radius: 20px;
-        background-color: white;
-        color: blueviolet;
-        &:hover {
-          opacity: 0.8;
-          transition: all 0.3s linear;
-        }
+      flex-direction: column;
+      gap: 20px;
+      height: fit-content;
 
-        &:first-child {
-          color: white;
-          background-color: blueviolet;
+      img {
+        border-radius: 50%;
+        width: 150px;
+        height: 150px;
+      }
+
+      p {
+        span {
+          color: blueviolet;
         }
       }
+
+      .btns {
+        display: flex;
+        justify-content: space-between;
+        button {
+          border: none;
+          cursor: pointer;
+          padding: 10px;
+          border: 1px solid blueviolet;
+          font-weight: bold;
+          border-radius: 20px;
+          background-color: white;
+          color: blueviolet;
+          &:hover {
+            opacity: 0.8;
+            transition: all 0.3s linear;
+          }
+
+          &:first-child {
+            color: white;
+            background-color: blueviolet;
+          }
+        }
+      }
+    }
+
+    .right {
+      flex: 2;
+      display: flex;
+      flex-direction: column;
     }
   }
 }

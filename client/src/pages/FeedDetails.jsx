@@ -1,31 +1,41 @@
 import Comment from "../components/Comment";
 import { Link, useLocation } from "react-router-dom";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import makeRequest from "../services/makeRequest";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext.js";
 import CreateComment from "../components/CreateComment";
 import LikeComment from "../components/LikeComment";
 import moment from "moment";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { RxBookmark, RxBookmarkFilled } from "react-icons/rx";
+import {
+  AddSavedFeed,
+  GetComments,
+  GetFeedDetails,
+  GetSaved,
+  RemoveSavedFeed,
+} from "../services/fetch";
+import { scrollUp } from "../services/BackToTop";
+import { AiOutlineHeart } from "react-icons/ai";
+import { VscComment } from "react-icons/vsc";
+import { BsThreeDots } from "react-icons/bs";
+import FeedRightDetail from "./FeedDetails/FeedRightDetail";
+import FeedImage from "../components/Feed/FeedImage";
+import FeedInfo from "../components/Feed/FeedInfo";
+import FeedContent from "../components/Feed/FeedContent";
+import FeedActions from "../components/Feed/FeedActions";
+import ListComment from "../components/Comments/ListComment";
 
 const FeedDetails = () => {
-  const [backToTop, setBackToTop] = useState(false);
   const { currentUser, successMessage } = useContext(AuthContext);
-  const feedId = useLocation().pathname?.split("/")[2];
-  const [message, setMessage] = useState("");
+  const titleURL = useLocation().pathname?.split("/")[2];
+  const feedId = useLocation().pathname?.split("/")[3];
+  const [backToTop, setBackToTop] = useState(false);
   const [saveFeed, setSaveFeed] = useState(false);
   const [openOptions, setOpenOptions] = useState(false);
+  const [isReply, setIsReply] = useState(false);
 
-  const commentRef = useRef(null);
-
-  const scrollToBottom = () => {
-    commentRef.current.scrollIntoView({
-      behavior: "smooth",
-    });
-  };
-
+  // BUTTON SCROLL TO TOP
   useEffect(() => {
     window.addEventListener("scroll", () => {
       if (window.scrollY > 500) {
@@ -36,78 +46,28 @@ const FeedDetails = () => {
     });
   }, []);
 
-  const scrollUp = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
+  // GET DATA
+  const { isLoading, data, error } = GetFeedDetails("feed", feedId, titleURL);
+  // const { data: savedData } = GetSaved("savedFeeds");
 
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
 
-  const { isLoading, data, error } = useQuery(["feed", feedId], () =>
-    makeRequest.get(`/feeds/${feedId}`).then((res) => res.data.feed[0])
-  );
-
-  const {
-    isLoading: cmsLoading,
-    data: cms,
-    error: cmsError,
-  } = useQuery(["comments"], () =>
-    makeRequest.get(`/comments/${feedId}`).then((res) => res.data.comments)
-  );
-
-  const mutaion = useMutation((newCm) => makeRequest.post("/comments", newCm), {
-    onSuccess: () => {
-      queryClient.invalidateQueries(["comments"]);
-    },
-  });
-
-  const handleComment = (e) => {
-    e.preventDefault();
-
-    mutaion.mutate({ message, feedId, userId: currentUser.userId });
-    scrollToBottom();
-    setMessage("");
-  };
-
-  const {
-    isLoading: savedLoading,
-    data: savedData,
-    error: savedError,
-  } = useQuery(["savedFeeds"], () =>
-    makeRequest.get(`/feeds/saved`).then((res) => res.data.saved)
-  );
-
-  const mutaion2 = useMutation(
-    (saved) => {
-      if (saved) {
-        return makeRequest.delete(`/feeds/saved/${feedId}`).then((res) => {
-          if (res.status === 200) {
-            successMessage(res.data.message);
-          }
-        });
-      } else {
-        return makeRequest
-          .put(`/feeds/saved/${feedId}`, { saved: saveFeed })
-          .then((res) => {
-            if (res.status === 200) {
-              successMessage(res.data.message);
-            }
-          });
-      }
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["savedFeeds"]);
-      },
-    }
-  );
-
-  const handleSavedFeed = () => {
-    mutaion2.mutate(savedData?.includes(feedId));
-    setSaveFeed(!saveFeed);
-  };
+  // // HANDLE SAVED FEED
+  // const mutaionSaved = useMutation(
+  //   async (saved) =>
+  //     saved
+  //       ? await RemoveSavedFeed(successMessage, feedId)
+  //       : await AddSavedFeed(successMessage, feedId, saveFeed),
+  //   {
+  //     onSuccess: () => {
+  //       queryClient.invalidateQueries(["savedFeeds"]);
+  //     },
+  //   }
+  // );
+  // const handleSavedFeed = () => {
+  //   mutaionSaved.mutate(savedData?.includes(feedId));
+  //   setSaveFeed(!saveFeed);
+  // };
 
   return (
     <div className="feedDetails">
@@ -123,92 +83,53 @@ const FeedDetails = () => {
           <p>Somethings went wrong ...</p>
         ) : (
           <>
-            <div className="feed">
-              <div className="top">
-                <div className="top-left">
-                  <img
-                    src={"/images/" + (data.profilePic || "default_avatar.png")}
-                    alt=""
+            <div className="left">
+              <ul>
+                <li>
+                  <AiOutlineHeart className="icon" />
+                  <span>2</span>
+                </li>
+                <li>
+                  <VscComment className="icon" />
+                  <span>2</span>
+                </li>
+                <li>
+                  <RxBookmark className="icon" />
+                  <span>2</span>
+                </li>
+                <li>
+                  <BsThreeDots className="icon" />
+                  <span>2</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="center">
+              <div className="feed">
+                <FeedImage image={data.image} />
+
+                <div className="feedContent">
+                  <FeedInfo
+                    avatar={data.avatar}
+                    author={data.author}
+                    name={data.name}
+                    createdFeed={data.createdFeed}
                   />
-                  <p>
-                    * Posted by
-                    <span
-                      style={{
-                        color: "blueviolet",
-                        margin: "0 5px",
-                        fontSize: "14px",
-                      }}
-                    >
-                      <Link to={`/profile/${data.userId}`} className="link">
-                        {data.username}
-                      </Link>
-                    </span>
-                    <span style={{ fontSize: "10px" }}>
-                      {moment(data.created_at).fromNow()}
-                    </span>
-                  </p>
-                </div>
-                <div className="top-right">
-                  {savedData?.includes(feedId) ? (
-                    <RxBookmarkFilled
-                      className="icon"
-                      style={{ color: "goldenrod" }}
-                      onClick={handleSavedFeed}
-                    />
-                  ) : (
-                    <RxBookmark className="icon" onClick={handleSavedFeed} />
-                  )}
-                  <BiDotsVerticalRounded
-                    className="icon"
-                    onClick={() => setOpenOptions(!openOptions)}
-                  />
-                  {openOptions && (
-                    <ul>
-                      <li onClick="">Remove Feed</li>
-                      <li>Options 2</li>
-                      <li>Options 3</li>
-                    </ul>
-                  )}
+
+                  <FeedContent title={data.title} content={data.content} />
                 </div>
               </div>
 
-              <Link to={`/feeds/${feedId}`} className="link">
-                <div className="content">
-                  <p>{data.content}</p>
-                  {data.feedImg && (
-                    <div className="imgContainer">
-                      <img src={"/images/" + data.feedImg} alt="" />
-                    </div>
-                  )}
-                </div>
-              </Link>
+              <div className="createCm">
+                <p>
+                  Comment as <span>{currentUser.name}</span>
+                </p>
+                <CreateComment parentFeed={feedId} author={currentUser.id}/>
+              </div>
 
-              <LikeComment feedId={feedId} cms={cms} />
+              <ListComment feedId={feedId} />
             </div>
-            <div className="createCm">
-              <p>
-                Comment as <span>{currentUser.username}</span>
-              </p>
-              <CreateComment
-                message={message}
-                setMessage={setMessage}
-                handleComment={handleComment}
-                feedId={feedId}
-                userId={currentUser.userId}
-                cms={cms}
-              />
-            </div>
-
-            <div className="listCm">
-              {cmsLoading ? (
-                <p>Loading ...</p>
-              ) : cmsError ? (
-                <p>Somethings went wrong ...</p>
-              ) : (
-                cms.map((c) => <Comment key={c.id} comment={c} cms={cms} />)
-              )}
-              <div ref={commentRef} />
-            </div>
+            <FeedRightDetail />
           </>
         )}
       </div>

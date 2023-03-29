@@ -1,22 +1,38 @@
 .createPost {
-  display: flex;
-  justify-content: center;
-  background-color: #dae0e6;
-  padding: 20px 24px;
-  min-height: calc(100vh - 50px);
+  background-color: #f5f5f5;
+  overflow: hidden;
+  min-height: calc(100vh - 60px);
 
   .container {
+    border: 1px solid lightgray;
+    padding: 20px 16px;
     background-color: white;
-    max-width: 880px;
-    width: 880px;
-    padding: 20px 100px;
+    max-width: 1280px;
+    width: 60%;
+    margin-left: 120px;
 
     h2 {
-      margin-bottom: 40px;
+      margin-bottom: 20px;
       text-align: center;
     }
 
     form {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+
+      input {
+        // padding: 20px;
+        outline: none;
+        border: none;
+        font-size: 24px;
+        font-weight: bold;
+        &::placeholder {
+          font-weight: 900;
+          font-size: 24px;
+        }
+      }
+
       textarea {
         border: none;
         border: 0.8px solid lightgray;
@@ -25,10 +41,18 @@
         outline: 1px solid white;
         border-radius: 4px;
         padding: 10px;
-        font-size: 14px;
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: 1px;
         height: 200px;
         &:focus {
           outline-color: blueviolet;
+        }
+
+        &::placeholder {
+          font-size: 18px;
+          letter-spacing: 1px;
+          font-weight: 500;
         }
       }
 
@@ -38,24 +62,26 @@
         gap: 100px;
         cursor: pointer;
         margin-top: 20px;
-        
-        label{
+
+        label {
           padding: 8px 16px;
           border: 1px solid lightgray;
           cursor: pointer;
-          font-size: 14px;
+          font-size: 16px;
+          font-weight: 500;
           &:hover {
             cursor: pointer;
             text-decoration: underline;
           }
 
-          input{
+          input {
             display: none;
           }
         }
 
         span {
-          font-size: 14px;
+          font-size: 16px;
+          font-weight: 500;
           &:hover {
             cursor: pointer;
             text-decoration: underline;
@@ -64,8 +90,8 @@
       }
 
       img {
-        width: 300px;
-        height: 300px;
+        width: 120px;
+        height: 120px;
         object-fit: cover;
       }
 
@@ -79,7 +105,8 @@
         font-weight: bold;
         cursor: pointer;
         border-radius: 20px;
-        font-size: 11px;
+        font-size: 16px;
+        width: 120px;
         &:hover {
           opacity: 0.8;
           transition: all 0.3s linear;

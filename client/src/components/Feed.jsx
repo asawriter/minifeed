@@ -5,100 +5,54 @@ import { Link } from "react-router-dom";
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext.js";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import makeRequest from "../services/makeRequest";
+import { RemoveFeed } from "../services/fetch/loadFeeds.js";
+import FeedActions from "./Feed/FeedActions.jsx";
+import FeedImage from "./Feed/FeedImage.jsx";
+import FeedInfo from "./Feed/FeedInfo.jsx";
+import FeedContent from "./Feed/FeedContent.jsx";
 
 const Feed = ({ feed }) => {
-  const {
-    feedId,
-    username,
-    createdFeed,
-    content,
-    feedImg,
-    userId,
-    profilePic,
-  } = feed;
+  const { title, feedId, name, createdFeed, content, image, author, avatar } =
+    feed;
   const { currentUser, successMessage } = useContext(AuthContext);
   const [openOptions, setOpenOptions] = useState(false);
   const [saveFeed, setSaveFeed] = useState(false);
-
   const queryClient = useQueryClient();
 
+  // HANDLE REMOVE FEED
   const mutaion2 = useMutation(
-    () => {
-      return makeRequest.delete(`/feeds/${feedId}`).then((res) => {
-        if (res.status === 200) {
-          successMessage(res.data.message);
-        }
-      });
-    },
+    async () => await RemoveFeed(feedId, successMessage),
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["feeds"]);
       },
     }
   );
-
   const handleRemove = () => {
-    if (currentUser.userId === userId) {
+    if (currentUser.id === author) {
       mutaion2.mutate();
     }
   };
 
   return (
-    <div className="feed">
-      <div className="top">
-        <div className="top-left">
-          <img src={"/images/" + (profilePic || "default_avatar.png")} alt="" />
-          <p>
-            * Posted by
-            <span
-              style={{ color: "blueviolet", margin: "0 5px", fontSize: "14px" }}
-            >
-              <Link to={`/profile/${userId}`} className="link">
-                {username}
-              </Link>
-            </span>
-            <span style={{ fontSize: "10px" }}>
-              {moment(createdFeed).fromNow()}
-            </span>
-          </p>
-        </div>
-        <div className="top-right">
-          {saveFeed ? (
-            <RxBookmarkFilled
-              className="icon"
-              style={{ color: "goldenrod" }}
-              onClick={() => setSaveFeed(false)}
-            />
-          ) : (
-            <RxBookmark className="icon" onClick={() => setSaveFeed(true)} />
-          )}
-          <BiDotsVerticalRounded
-            className="icon"
-            onClick={() => setOpenOptions(!openOptions)}
-          />
-          {openOptions && (
-            <ul onClick={() => setOpenOptions(false)}>
-              <li onClick={handleRemove}>Remove Feed</li>
-              <li>Options 2</li>
-              <li>Options 3</li>
-            </ul>
-          )}
-        </div>
-      </div>
+    <Link to={`/feeds/${title}/${feedId}`} className="link">
+      <div className="feed">
+        <FeedImage image={image} />
 
-      <div className="content">
-        <p>{content}</p>
-        {feedImg && (
-          <div className="imgContainer">
-            <img src={"/images/" + feedImg} alt="" />
-          </div>
-        )}
+        <div className="feedContent">
+          <FeedInfo
+            avatar={avatar}
+            author={author}
+            name={name}
+            createdFeed={createdFeed}
+          />
+
+          <FeedContent title={title} content={content} />
+
+          <FeedActions />
+        </div>
       </div>
-      <Link to={`/feeds/${feedId}`} className="link">
-        <span className="view-feed">View Feed</span>
-      </Link>
-    </div>
+    </Link>
   );
 };
 

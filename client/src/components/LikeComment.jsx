@@ -1,25 +1,23 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useContext } from "react";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import {VscComment} from "react-icons/vsc"
+import { VscComment } from "react-icons/vsc";
 import { AuthContext } from "../context/AuthContext";
-import makeRequest from "../services/makeRequest";
+import { AddLiked, GetLikes, RemoveLiked } from "../services/fetch";
 
-const LikeComment = ({feedId, cms}) => {
+const LikeComment = ({ feedId, cms }) => {
   const { currentUser } = useContext(AuthContext);
+  const queryClient = useQueryClient();
 
-  const queryClient = useQueryClient()
+  // GET LIKES
+  const { isLoading, data, error } = GetLikes("likes", feedId);
 
-  const { isLoading, data, error } = useQuery(["likes"], () => 
-    makeRequest.get(`/likes/${feedId}`).then((res) => res.data.likes));
-
+  // HANDLE LIKES
   const mutation = useMutation(
-    (newLiked) => {
-      if (newLiked) {
-        return makeRequest.post(`/likes/${feedId}`, { userLiked: currentUser.userId});
-      }
-      return makeRequest.post("/likes", { userLiked: currentUser.userId, feedLiked: feedId});
-    },
+    async (liked) =>
+      liked
+        ? await RemoveLiked(feedId, currentUser.userId)
+        : await AddLiked(feedId, currentUser.userId),
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["likes"]);
@@ -51,8 +49,8 @@ const LikeComment = ({feedId, cms}) => {
           <p>Somethings went wrong.</p>
         ) : (
           data?.length
-        )}
-        {" "}likes
+        )}{" "}
+        likes
       </p>
       <p>
         <VscComment style={{ fontSize: "18px", cursor: "pointer" }} />

@@ -6,11 +6,11 @@ export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(
-    JSON.parse(localStorage.getItem("isAuth")) || false
+    JSON.parse(localStorage.getItem("userData")) || {}
   );
 
   useEffect(() => {
-    localStorage.setItem("isAuth", JSON.stringify(currentUser));
+    localStorage.setItem("userData", JSON.stringify(currentUser));
   }, [currentUser]);
 
   const options = {
@@ -29,7 +29,9 @@ export const AuthContextProvider = ({ children }) => {
   const errorMessage = (message) => toast.error(message, options);
 
   return (
-    <AuthContext.Provider value={{ currentUser, setCurrentUser, successMessage, errorMessage }}>
+    <AuthContext.Provider
+      value={{ currentUser, setCurrentUser, successMessage, errorMessage }}
+    >
       {children}
     </AuthContext.Provider>
   );

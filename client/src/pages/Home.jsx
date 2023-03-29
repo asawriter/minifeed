@@ -1,5 +1,6 @@
 import Section from "../components/Section";
 import { useEffect, useState } from "react";
+import { scrollUp } from "../services/BackToTop";
 
 const Home = () => {
   const [backToTop, setBackToTop] = useState(false);
@@ -13,13 +14,6 @@ const Home = () => {
       }
     });
   }, []);
-
-  const scrollUp = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
 
   return (
     <div className="home">

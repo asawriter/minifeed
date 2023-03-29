@@ -4,18 +4,20 @@ import { AuthContext } from "../context/AuthContext";
 import makeRequest from "../services/makeRequest";
 
 const Update = ({ setOpenUpdate }) => {
-  const { currentUser, successMessage, errorMessage } = useContext(AuthContext);
+  const { currentUser, successMessage } = useContext(AuthContext);
   const [file, setFile] = useState("");
   const [texts, setTexts] = useState({
     username: currentUser.username,
     email: currentUser.email,
     profilePic: currentUser.profilePic,
   });
+  const queryClient = useQueryClient();
 
   const handleChange = (e) => {
     setTexts((prev) => ({ ...prev, [e.target.name]: [e.target.value] }));
   };
 
+  // UPLOAD IMAGE
   const upload = async (file) => {
     try {
       const formData = new FormData();
@@ -27,12 +29,12 @@ const Update = ({ setOpenUpdate }) => {
     }
   };
 
-  const queryClient = useQueryClient();
-
+  // HANDLE UPDATE USER
   const mutation = useMutation(
-    (user) => {
-      return makeRequest.put(`/users/${currentUser.userId}`, user);
-    },
+    async (user) =>
+      await makeRequest
+        .put(`/users/${currentUser.userId}`, user)
+        .then((res) => res.status === 200 && successMessage(res.data.message)),
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["users"]);
@@ -44,7 +46,6 @@ const Update = ({ setOpenUpdate }) => {
     e.preventDefault();
 
     let profileUrl = file ? await upload(file) : currentUser.profilePic;
-
     mutation.mutate({ ...texts, profilePic: profileUrl });
 
     setOpenUpdate(false);
@@ -69,7 +70,20 @@ const Update = ({ setOpenUpdate }) => {
           onChange={handleChange}
           placeholder="edit email"
         />
-        <input type="file" onChange={(e) => setFile(e.target.files[0])} />
+        <p>
+          <label htmlFor="inputTag">
+            Select Image
+            <input
+              id="inputTag"
+              type="file"
+              placeholder="Choose a image ..."
+              accept="image/*"
+              onChange={(e) => setFile(e.target.files[0])}
+            />
+          </label>
+          {file && <span onClick={() => setFile(null)}>Delete Image</span>}
+        </p>
+        {file && <img src={URL.createObjectURL(file)} alt="" />}
         <button onClick={handleUpdate}>Update</button>
       </form>
     </div>

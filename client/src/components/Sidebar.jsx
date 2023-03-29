@@ -20,42 +20,6 @@ const Sidebar = () => {
         </div>
       </div>
 
-      <div className="center">
-        <p>RECENT POST</p>
-        <div className="list">
-        <div className="item">
-            <img
-              src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.3CRnT1KSwFkePYHzhcq6rgHaJQ%26pid%3DApi&f=1&ipt=f491e7ee9e208e3132fd38e7080693151f4010c0a7fb9419c2390d5a2f3318e6&ipo=images"
-              alt=""
-            />
-            <div className="post">
-              <p>Who was the best drunk/alcolohic character in a TV</p>
-              <span>* 1001 comments * 3/1/2023</span>
-            </div>
-          </div>
-          <div className="item">
-            <img
-              src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.3CRnT1KSwFkePYHzhcq6rgHaJQ%26pid%3DApi&f=1&ipt=f491e7ee9e208e3132fd38e7080693151f4010c0a7fb9419c2390d5a2f3318e6&ipo=images"
-              alt=""
-            />
-            <div className="post">
-              <p>Who was the best drunk/alcolohic character in a TV</p>
-              <span>* 1001 comments * 3/1/2023</span>
-            </div>
-          </div>
-          <div className="item">
-            <img
-              src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.3CRnT1KSwFkePYHzhcq6rgHaJQ%26pid%3DApi&f=1&ipt=f491e7ee9e208e3132fd38e7080693151f4010c0a7fb9419c2390d5a2f3318e6&ipo=images"
-              alt=""
-            />
-            <div className="post">
-              <p>Who was the best drunk/alcolohic character in a TV</p>
-              <span>* 1001 comments * 3/1/2023</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <div className="bottom">
         <div className="child">
           <div className="left">

@@ -1,10 +1,8 @@
 import Feed from "./Feed";
-import { useQuery } from "@tanstack/react-query";
-import makeRequest from "../services/makeRequest";
+import { GetAllFeeds } from "../services/fetch";
 
 const Feeds = () => {
-  const { isLoading, data, error } = useQuery(["feeds"], () =>
-    makeRequest.get("/feeds").then((res) => res.data?.feeds));
+  const { isLoading, data, error } = GetAllFeeds("feeds")
 
   return (
     <div className="feeds">

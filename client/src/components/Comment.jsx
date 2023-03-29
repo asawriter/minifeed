@@ -1,33 +1,47 @@
 import moment from "moment";
 import { useState } from "react";
-import CreateComment from "./CreateComment";
+import { GetComments } from "../services/fetch";
+import ReplyComment from "./ReplyComment";
 
-const Comment = ({ comment, cms }) => {
+const Comment = ({comment}) => {
+  const {avatar, name, content, createdComment} = comment;
   const [openComment, setOpenComment] = useState(false);
+
+  const { isLoading, data, error } = GetComments("replyCms", comment.parentId);
+
+  console.log(data);
 
   return (
     <div className="comment">
-      <div className="info">
+      <div className="imgContainer">
         <img
-          src={"/images/" + comment?.profilePic || "default_avatar.png"}
+          src={"/images/" + avatar || "default_avatar.png"}
           alt=""
         />
-        <div className="name">
-          <p>{comment?.username}</p>
-          <span>{moment(comment?.comment_created).fromNow()}</span>
-        </div>
       </div>
-
-      <div className="text">
-        <p>{comment?.message}</p>
-        {!openComment ? (
-          <span onClick={() => setOpenComment(true)}>Reply</span>
-        ) : (
-          <span onClick={() => setOpenComment(false)}>Close</span>
-        )}
-        {openComment && <CreateComment />}
-        <div className="listCm">
+      <div className="info">
+        <div className="name">
+          <span>{name}</span>
+          <p>{content}</p>
         </div>
+
+        <div className="details">
+          <span>{moment(createdComment).fromNow()}</span>
+          {!openComment ? (
+            <span onClick={() => setOpenComment(true)}>Reply</span>
+          ) : (
+            <span onClick={() => setOpenComment(false)}>Close</span>
+          )}
+        </div>
+
+        {openComment && (
+          <ReplyComment
+            feedId={comment.parentId}
+          
+            setOpenComment={setOpenComment}
+          />
+        )}
+        {/* <div className="replyCms">{isReply && <Comment />}</div> */}
       </div>
     </div>
   );

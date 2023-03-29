@@ -1,12 +1,12 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
-import makeRequest from "../services/makeRequest";
+import { IsLogin } from "../services/fetch";
 
 const Login = () => {
   const { setCurrentUser, successMessage } = useContext(AuthContext);
 
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
@@ -14,15 +14,8 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    await makeRequest
-      .post("/auth/login", { username, password })
-      .then((res) => {
-        if (res.status === 200) {
-          setCurrentUser(res.data.user);
-        }
-        successMessage(res.data.message);
-        navigate("/");
-      });
+    await IsLogin({email, password}, setCurrentUser, successMessage);
+    navigate("/")
   };
 
   return (
@@ -30,7 +23,7 @@ const Login = () => {
       <div className="container">
         <h2>Login</h2>
         <form>
-          <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
+          <input type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
           <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
           <div className="btns">
             <button onClick={handleLogin}>Login</button>

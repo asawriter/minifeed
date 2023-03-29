@@ -4,6 +4,7 @@
     border: 0.8px solid lightgray;
     background-color: white;
     border-radius: 4px;
+    margin-bottom: 16px;
 
     .info {
       display: flex;
@@ -48,57 +49,6 @@
         &:hover {
           opacity: 0.8;
           transition: all 0.3s linear;
-        }
-      }
-    }
-  }
-
-  .center {
-    padding: 12px;
-    border: 0.8px solid lightgray;
-    background-color: white;
-    border-radius: 4px;
-    margin: 16px 0;
-
-    p {
-      font-size: 10px;
-      font-weight: bold;
-    }
-
-    .list {
-      .item {
-        padding: 12px 0;
-        display: flex;
-        gap: 16px;
-        border-bottom: 0.1px solid lightgray;
-        width: 100%;
-        cursor: pointer;
-        &:last-child {
-          border-bottom: none;
-        }
-
-        img {
-          flex: 1;
-          width: 50px;
-          height: 50px;
-          object-fit: cover;
-        }
-
-        .post {
-          flex: 4;
-
-          p {
-            font-size: 13px;
-            &:hover {
-              text-decoration: underline;
-              transition: all 0.3s linear;
-            }
-          }
-
-          span {
-            font-size: 10px;
-            color: gray;
-          }
         }
       }
     }

@@ -1,8 +1,8 @@
 import { Router } from "express";
-import {createComment, getCommentOfFeed} from "../controllers/index.js"
+import {createComment, getCommentsByFeedId} from "../controllers/index.js"
 const router = Router()
 
 router.post('/', createComment)
-router.get('/:feedId', getCommentOfFeed)
+router.get('/:feedId', getCommentsByFeedId)
 
 export default router;

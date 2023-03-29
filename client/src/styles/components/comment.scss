@@ -1,55 +1,70 @@
-.comment {
-  .info {
+.listCm {
+  .comment {
     display: flex;
-    align-items: center;
+    gap: 20px;
+    // align-items: center;
 
-    img {
-      width: 30px;
-      height: 30px;
-      object-fit: cover;
-      border-radius: 50%;
-      margin-right: 10px;
-    }
+    .imgContainer {
+      width: 40px;
+      height: 40px;
+      margin-top: 20px;
 
-    .name {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-
-      p {
-        font-size: 13px;
-        font-weight: 500;
-        cursor: pointer;
-      }
-
-      span {
-        font-size: 9px;
-        color: gray;
+      img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        border-radius: 50%;
       }
     }
-  }
 
-  .text {
-    width: 90%;
-    margin: 8px 0 0 15px;
-    padding-left: 25px;
-    border-left: 0.1px solid lightgray;
-    position: relative;
+    .info {
+      padding: 10px 20px;
+      border: 0.1px solid #c9c9c9;
+      border-radius: 4px;
+      width: 100%;
+      .name {
+        border-radius: 20px;
+        padding: 2px 14px;
+        width: fit-content;
 
-    p {
-      text-align: justify;
-      font-size: 14px;
-    }
+        span {
+          font-size: 14px;
+          font-weight: 600;
+          cursor: pointer;
+        }
 
-    span {
-      position: absolute;
-      right: 0;
-      font-size: 10px;
-      cursor: pointer;
-      color: blueviolet;
-      &:hover {
-        text-decoration: underline;
-        transition: all 0.3s linear;
+        p {
+          font-size: 16px;
+          color: blueviolet;
+        }
+      }
+
+      .details {
+        margin-top: 2px;
+        display: flex;
+        gap: 15px;
+
+        span {
+          font-size: 11px;
+          color: gray;
+          font-weight: bold;
+
+          &:hover {
+            cursor: pointer;
+            text-decoration: underline;
+            transition: all 0.3s linear;
+          }
+
+          &:first-child:hover {
+            cursor: text;
+          }
+        }
+      }
+
+      .replyCms {
+        position: absolute;
+        top: 10px;
+        left: 0;
       }
     }
   }
