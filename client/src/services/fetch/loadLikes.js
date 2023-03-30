@@ -4,8 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 // GET ALL LIKES
 export const GetLikes = (QUERY_KEY, feedId) => {
   try {
-    return useQuery([QUERY_KEY], () =>
-      makeRequest.get(`/likes/${feedId}`).then((res) => res.data.likes)
+    return useQuery([QUERY_KEY, feedId], () =>
+      makeRequest.get(`/feeds/like?feedId=${feedId}`).then((res) => res.data.likes)
     );
   } catch (error) {
     console.log(error);
@@ -15,7 +15,7 @@ export const GetLikes = (QUERY_KEY, feedId) => {
 // DISLIKE
 export const RemoveLiked = (feedId, userId) => {
   try {
-    return makeRequest.post(`/likes/${feedId}`, {
+    return makeRequest.post(`/feeds/${feedId}/unlike`, {
       userLiked: userId,
     });
   } catch (error) {
@@ -26,7 +26,7 @@ export const RemoveLiked = (feedId, userId) => {
 // LIKED
 export const AddLiked = (feedId, userId) => {
   try {
-    return makeRequest.post("/likes", {
+    return makeRequest.post(`/feeds/${feedId}/like`, {
       userLiked: userId,
       feedLiked: feedId,
     });

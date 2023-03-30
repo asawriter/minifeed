@@ -83,12 +83,31 @@ export const removeFeed = async (req, res, next) => {
   }
 };
 
+// GET LIKES OF ONE FEED
+export const getLikesByFeedId = async (req, res, next) => {
+  try {
+    const [likes] = await db.query(
+      "select userLiked from likes where feedLiked = ?",
+      [req.query.feedId]
+    );
+
+    return res
+      .status(200)
+      .json({
+        message: "Get all likes of feed",
+        likes: likes.map((like) => like.userLiked),
+      });
+  } catch (error) {
+    return next(error);
+  }
+};
+
 // LIKE FEED
 export const createLike = async (req, res, next) => {
   try {
-    const { userLiked, feedLiked } = req.body;
+    const { userLiked } = req.body;
 
-    const values = [generateID(), userLiked, feedLiked];
+    const values = [generateID(), userLiked, req.params.feedId];
 
     await db.query(
       "Insert into likes (`id`, `userLiked`, `feedLiked`) values (?)",
@@ -106,7 +125,7 @@ export const deleteLike = async (req, res, next) => {
   try {
     const { userLiked } = req.body;
 
-    await db.query("Delete from likes where userliked = ? and feedLiked = ?", [
+    await db.query("Delete from likes where `userliked` = ? and `feedLiked` = ?", [
       userLiked,
       req.params.feedId,
     ]);

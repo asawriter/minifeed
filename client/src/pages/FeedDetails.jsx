@@ -1,24 +1,12 @@
-import Comment from "../components/Comment";
-import { Link, useLocation } from "react-router-dom";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useContext, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+
+import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../context/AuthContext.js";
 import CreateComment from "../components/CreateComment";
-import LikeComment from "../components/LikeComment";
-import moment from "moment";
-import { BiDotsVerticalRounded } from "react-icons/bi";
-import { RxBookmark, RxBookmarkFilled } from "react-icons/rx";
-import {
-  AddSavedFeed,
-  GetComments,
-  GetFeedDetails,
-  GetSaved,
-  RemoveSavedFeed,
-} from "../services/fetch";
+
+import { GetFeedDetails } from "../services/fetch";
 import { scrollUp } from "../services/BackToTop";
-import { AiOutlineHeart } from "react-icons/ai";
-import { VscComment } from "react-icons/vsc";
-import { BsThreeDots } from "react-icons/bs";
+
 import FeedRightDetail from "./FeedDetails/FeedRightDetail";
 import FeedImage from "../components/Feed/FeedImage";
 import FeedInfo from "../components/Feed/FeedInfo";
@@ -27,12 +15,21 @@ import FeedActions from "../components/Feed/FeedActions";
 import ListComment from "../components/Comments/ListComment";
 
 const FeedDetails = () => {
-  const { currentUser, successMessage } = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext);
   const titleURL = useLocation().pathname?.split("/")[2];
   const feedId = useLocation().pathname?.split("/")[3];
   const [backToTop, setBackToTop] = useState(false);
-  const [saveFeed, setSaveFeed] = useState(false);
-  const [openOptions, setOpenOptions] = useState(false);
+
+  const scrollRef = useRef();
+
+  const scrollToCm = () => {
+    let heightToElement = scrollRef.current?.getBoundingClientRect().bottom - 306;
+
+    window.scrollTo({
+      behavior: "smooth",
+      top: heightToElement,
+    });
+  };
 
   // BUTTON SCROLL TO TOP
   useEffect(() => {
@@ -47,26 +44,6 @@ const FeedDetails = () => {
 
   // GET DATA
   const { isLoading, data, error } = GetFeedDetails("feed", feedId, titleURL);
-  // const { data: savedData } = GetSaved("savedFeeds");
-
-  // const queryClient = useQueryClient();
-
-  // // HANDLE SAVED FEED
-  // const mutaionSaved = useMutation(
-  //   async (saved) =>
-  //     saved
-  //       ? await RemoveSavedFeed(successMessage, feedId)
-  //       : await AddSavedFeed(successMessage, feedId, saveFeed),
-  //   {
-  //     onSuccess: () => {
-  //       queryClient.invalidateQueries(["savedFeeds"]);
-  //     },
-  //   }
-  // );
-  // const handleSavedFeed = () => {
-  //   mutaionSaved.mutate(savedData?.includes(feedId));
-  //   setSaveFeed(!saveFeed);
-  // };
 
   return (
     <div className="feedDetails">
@@ -82,26 +59,11 @@ const FeedDetails = () => {
           <p>Somethings went wrong ...</p>
         ) : (
           <>
-            <div className="left">
-              <ul>
-                <li>
-                  <AiOutlineHeart className="icon" />
-                  <span>2</span>
-                </li>
-                <li>
-                  <VscComment className="icon" />
-                  <span>2</span>
-                </li>
-                <li>
-                  <RxBookmark className="icon" />
-                  <span>2</span>
-                </li>
-                <li>
-                  <BsThreeDots className="icon" />
-                  <span>2</span>
-                </li>
-              </ul>
-            </div>
+            <FeedActions
+              feedId={feedId}
+              titleURL={titleURL}
+              scrollToCm={scrollToCm}
+            />
 
             <div className="center">
               <div className="feed">
@@ -119,17 +81,26 @@ const FeedDetails = () => {
                 </div>
               </div>
 
-              <div className="createCm">
+              <div className="createCm" ref={scrollRef}>
                 <p>
                   Comment as <span>{currentUser.name}</span>
                 </p>
-                <CreateComment parentFeed={feedId} author={currentUser.id} typeBtn="Submit"/>
+                <CreateComment
+                  parentFeed={feedId}
+                  author={currentUser.id}
+                  typeBtn="Submit"
+                />
               </div>
 
-              <ListComment feedId={feedId}/>
+              <ListComment feedId={feedId} />
             </div>
-            
-            <FeedRightDetail avatar={data.avatar} author={data.author} name={data.name} createdUser={data.createdUser}/>
+
+            <FeedRightDetail
+              avatar={data.avatar}
+              author={data.author}
+              name={data.name}
+              createdUser={data.createdUser}
+            />
           </>
         )}
       </div>

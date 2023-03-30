@@ -47,7 +47,7 @@ const Feed = ({ feed }) => {
 
           <FeedContent title={title} content={content} />
 
-          <FeedActions />
+          <FeedActions feedId={feedId}/>
         </div>
       </div>
     </Link>

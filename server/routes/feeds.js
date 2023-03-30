@@ -12,6 +12,7 @@ import {
   getSearchResults,
   createLike,
   deleteLike,
+  getLikesByFeedId,
 } from "../controllers/index.js";
 const router = Router();
 
@@ -27,12 +28,11 @@ router.post("/", createFeed);
 
 router.delete("/:titleURL/:feedId", removeFeed);
 
-router.put("/:feedId/like", createLike);
+router.get("/like", getLikesByFeedId);
 
-router.delete("/:feedId/unlike", deleteLike);
+router.post("/:feedId/like", createLike);
 
-
-
+router.post("/:feedId/unlike", deleteLike);
 
 router.put("/saved/:feedId", addSavedFeed);
 

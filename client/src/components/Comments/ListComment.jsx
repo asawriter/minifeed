@@ -1,7 +1,7 @@
 import { GetComments } from "../../services/fetch/loadComments";
 import Comment from "../Comment";
 
-const ListComment = ({ feedId, type }) => {
+const ListComment = ({ feedId }) => {
   const { isLoading, data, error } = GetComments("comments", feedId);
 
   return (
@@ -11,7 +11,10 @@ const ListComment = ({ feedId, type }) => {
       ) : error ? (
         <p>Something went wrong...</p>
       ) : (
-        data.length > 0 && data.map((c) => <Comment key={c.commentId} comment={c}/>)
+        data.length > 0 &&
+        data.map((c) => {
+          return <Comment key={c.commentId} comment={c} />;
+        })
       )}
     </div>
   );

@@ -73,42 +73,45 @@
 
     .actions {
       display: flex;
-      justify-content: space-between;
-      margin-left: 50px;
+      margin: 0px 50px;
 
       .left {
+        flex: 30;
         display: flex;
-        gap: 20px;
+        align-items: center;
 
-        p {
+        ul {
           display: flex;
-          align-items: center;
-          gap: 5px;
+          gap: 20px;
+          list-style-type: none;
 
-          .f-icon {
-            font-size: 22px;
+          .actionSaved {
+            display: none;
+          }
+
+          li {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+
+            .f-icon {
+              font-size: 22px;
+            }
           }
         }
       }
 
       .right {
-        .f-icon {
-          font-size: 22px;
+        flex: 1;
+        display: flex;
+        align-items: center;
+
+        p {
+          .f-icon {
+            font-size: 22px;
+          }
         }
       }
     }
   }
-
-  // .likecomments {
-  //   display: flex;
-  //   align-items: center;
-  //   gap: 15px;
-
-  //   p {
-  //     display: flex;
-  //     align-items: center;
-  //     gap: 6px;
-  //     font-size: 14px;
-  //   }
-  // }
 }

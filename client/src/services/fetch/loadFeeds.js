@@ -16,7 +16,9 @@ export const GetAllFeeds = (QUERY_KEY) => {
 export const GetFeedDetails = (QUERY_KEY, feedId, titleURL) => {
   try {
     return useQuery([QUERY_KEY, feedId], () =>
-      makeRequest.get(`/feeds/${titleURL}/${feedId}`).then((res) => res.data.feed[0])
+      makeRequest
+        .get(`/feeds/${titleURL}/${feedId}`)
+        .then((res) => res.data.feed[0])
     );
   } catch (error) {
     console.log(error);

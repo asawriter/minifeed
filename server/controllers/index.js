@@ -6,7 +6,5 @@ export * from './comments.js'
 
 export * from './users.js'
 
-export * from './likes.js'
-
 
 
