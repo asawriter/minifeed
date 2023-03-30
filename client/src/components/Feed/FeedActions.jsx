@@ -2,9 +2,14 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useContext } from "react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { BsThreeDots } from "react-icons/bs";
-import { RxBookmark } from "react-icons/rx";
+import { RxBookmark, RxBookmarkFilled } from "react-icons/rx";
 import { VscComment } from "react-icons/vsc";
 import { AuthContext } from "../../context/AuthContext";
+import {
+  AddBookmark,
+  GetFeedsBookmark,
+  RemoveBookmark,
+} from "../../services/fetch";
 import {
   AddLiked,
   GetLikes,
@@ -19,7 +24,7 @@ const FeedActions = ({ feedId, titleURL, scrollToCm }) => {
   const { isLoading, data, error } = GetLikes("likes", feedId);
 
   // HANDLE LIKE AND DISLIKE
-  const mutaion = useMutation(
+  const mutaionLiked = useMutation(
     (liked) => {
       if (liked) return RemoveLiked(feedId, currentUser.id);
       return AddLiked(feedId, currentUser.id);
@@ -30,9 +35,31 @@ const FeedActions = ({ feedId, titleURL, scrollToCm }) => {
       },
     }
   );
-
   const handleLiked = () => {
-    mutaion.mutate(data?.includes(currentUser.id));
+    mutaionLiked.mutate(data?.includes(currentUser.id));
+  };
+
+  // GET BOOKMARK OF EVERY FEED
+  const {
+    isLoading: loadingBookmark,
+    data: dataBookmark,
+    error: errorBookmark,
+  } = GetFeedsBookmark("bookmarks", feedId);
+
+  const mutaionBookmarked = useMutation(
+    (bookmarked) => {
+      if (bookmarked) return RemoveBookmark(currentUser.id, feedId);
+      return AddBookmark(currentUser.id, feedId);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["bookmarks"]);
+      },
+    }
+  );
+
+  const handleBookmarked = () => {
+    mutaionBookmarked.mutate(dataBookmark?.includes(currentUser.id));
   };
 
   return (
@@ -58,12 +85,26 @@ const FeedActions = ({ feedId, titleURL, scrollToCm }) => {
             </span>
           </li>
           <li>
-            <VscComment className="f-icon" onClick={scrollToCm}/>
+            <VscComment className="f-icon" onClick={scrollToCm} />
             <span>6 {!titleURL && "comments"}</span>
           </li>
           <li className="actionSaved">
-            <RxBookmark className="f-icon" />
-            <span>3</span>
+            {loadingBookmark ? (
+              <p>Loading</p>
+            ) : errorBookmark ? (
+              <p>Somthing went wrong</p>
+            ) : dataBookmark?.includes(currentUser.id) ? (
+              <RxBookmarkFilled
+                className="f-icon"
+                onClick={handleBookmarked}
+                style={{ color: "goldenrod" }}
+              />
+            ) : (
+              <RxBookmark className="f-icon" onClick={handleBookmarked} />
+            )}
+            <span>
+              {dataBookmark?.length}
+            </span>
           </li>
           <li className="actionSaved">
             <BsThreeDots className="f-icon" />

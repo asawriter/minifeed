@@ -57,4 +57,14 @@ CREATE TABLE IF NOT EXISTS friends (
     constraint fk_user_friends foreign key (followed) references users (id),
     constraint fk_feed_friends foreign key (follower) references users (id)
 );
+
+-- BOOKMARK TABLE
+CREATE TABLE IF NOT EXISTS bookmarks (
+    id varchar(200) not null,
+    userBookmarked varchar(200) not null,
+    feedBookmarked varchar(200) not null, 
+    constraint pk_id_bookmarks primary key (id),
+    constraint fk_user_bookmarks foreign key (userBookmarked) references users (id),
+    constraint fk_feed_bookmarks foreign key (feedBookmarked) references feeds (id)
+);
  

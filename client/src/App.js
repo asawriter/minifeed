@@ -10,8 +10,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import CreatePost from "./pages/CreatePost";
 import Navbar from "./components/Navbar";
-import SavedFeeds from "./pages/SavedFeeds";
 import EditProfile from "./pages/EditProfile";
+import FeedBookmark from "./pages/FeedBookmark";
 
 const App = () => {
   const { currentUser } = useContext(AuthContext);
@@ -29,8 +29,8 @@ const App = () => {
           <Route path="/feeds/:titleURL/:feedId" element={<FeedDetails />} />
           <Route path="/users/:userId" element={<Profile />} />
           <Route path="/create/post" element={<CreatePost />} />
-          <Route path="/saved/feeds/:userId" element={<SavedFeeds />} />
           <Route path="/users/:userId/edit" element={<EditProfile />}/>
+          <Route path="/feeds/:userId/bookmark/all" element={<FeedBookmark />}/>
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />

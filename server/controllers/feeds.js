@@ -91,12 +91,10 @@ export const getLikesByFeedId = async (req, res, next) => {
       [req.query.feedId]
     );
 
-    return res
-      .status(200)
-      .json({
-        message: "Get all likes of feed",
-        likes: likes.map((like) => like.userLiked),
-      });
+    return res.status(200).json({
+      message: "Get all likes of feed",
+      likes: likes.map((like) => like.userLiked),
+    });
   } catch (error) {
     return next(error);
   }
@@ -125,10 +123,10 @@ export const deleteLike = async (req, res, next) => {
   try {
     const { userLiked } = req.body;
 
-    await db.query("Delete from likes where `userliked` = ? and `feedLiked` = ?", [
-      userLiked,
-      req.params.feedId,
-    ]);
+    await db.query(
+      "Delete from likes where `userliked` = ? and `feedLiked` = ?",
+      [userLiked, req.params.feedId]
+    );
 
     return res.status(200).json({ message: "Feed has been unliked" });
   } catch (error) {
@@ -136,72 +134,72 @@ export const deleteLike = async (req, res, next) => {
   }
 };
 
-export const getOneFeed = async (req, res, next) => {
+// BOOKMARK FEED
+export const bookmarkFeed = async (req, res, next) => {
   try {
-    const [feed] = await db.query(
-      "select username, title, profilePic, saved, feedImg, feeds.created_at as feed_created ,content from users join feeds on users.id = feeds.userId where feeds.id = ?",
-      [req.params.feedId]
+    const { userBookmarked, feedBookmarked } = req.body;
+
+    const values = [generateID(), userBookmarked, feedBookmarked];
+
+    await db.query(
+      "Insert into bookmarks (`id`, `userBookmarked`, `feedBookmarked`) values (?)",
+      [values]
     );
 
-    if (!feed)
-      return res.status(404).json({ message: "Please create feed now." });
-
-    return res.status(200).json({ message: "Feeds of user.", feed });
+    return res.status(200).json({ message: "Feed has been bookmarked" });
   } catch (error) {
     return next(error);
   }
 };
 
-export const addSavedFeed = async (req, res, next) => {
+// UNBOOKMARK FEED
+export const unbookmarkFeed = async (req, res, next) => {
   try {
-    await db.query("update feeds set `saved` = ? where id = ?", [
-      req.body.saved,
-      req.params.feedId,
-    ]);
+    const { userBookmarked } = req.body;
 
-    return res.status(200).json({ message: "Feed has been saved." });
+    await db.query(
+      "Delete from bookmarks where `userBookmarked` = ? and `feedBookmarked` = ?",
+      [userBookmarked, req.params.feedId]
+    );
+
+    return res.status(200).json({ message: "Feed has been unbookmarked" });
   } catch (error) {
     return next(error);
   }
 };
 
-export const removeSavedFeed = async (req, res, next) => {
+// GET ALLS FEED BOOKMARKED
+export const getFeedsBookmarkByUserId = async (req, res, next) => {
   try {
-    await db.query("update feeds set `saved` = ? where id = ?", [
-      false,
-      req.params.feedId,
-    ]);
+    const { userId } = req.params;
 
-    return res.status(200).json({ message: "Remove feed from saved feeds." });
-  } catch (error) {
-    return next(error);
-  }
-};
-
-export const getSavedFeed = async (req, res, next) => {
-  try {
-    const [saved] = await db.query("select * from feeds where saved = ?", [1]);
+    const [feedsBookmark] = await db.query(
+      "select author, avatar, name, content, title, image, feeds.id as feedId, feeds.created_at as feedCreated from bookmarks join feeds on bookmarks.feedBookmarked = feeds.id join users on feeds.author = users.id where userBookmarked = ?",
+      [userId]
+    );
 
     return res.status(200).json({
-      message: "saved feeds",
-      savedFeeds: saved,
-      saved: saved.map((s) => s.id),
+      message: "Get feeds bookmarked",
+      feedsBookmark,
     });
   } catch (error) {
     return next(error);
   }
 };
 
-export const getSavedFeeds = async (req, res, next) => {
+// GET ALLS FEED BOOKMARKED
+export const getOneFeedBookmark = async (req, res, next) => {
   try {
-    const [saved] = await db.query(
-      "select feeds.*, profilePic, title, username from feeds join users on feeds.userId = users.id where users.id = ?",
-      [req.params.userId]
+    const { feedId } = req.query;
+
+    const [feedsBookmark] = await db.query(
+      "select userBookmarked from bookmarks where feedBookmarked = ?",
+      [feedId]
     );
 
     return res.status(200).json({
-      message: "saved feeds",
-      saved: saved.filter((s) => s.saved === 1),
+      message: "Get feeds bookmarked",
+      feedsBookmark: feedsBookmark.map((feed) => feed.userBookmarked),
     });
   } catch (error) {
     return next(error);

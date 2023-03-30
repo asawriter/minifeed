@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import makeRequest from "../services/makeRequest";
@@ -16,8 +16,6 @@ const EditProfile = () => {
     avatar: currentUser.avatar,
     bio: currentUser.bio || null,
   });
-
-  const queryClient = useQueryClient();
 
   const handleChange = (e) => {
     setTexts((prev) => ({ ...prev, [e.target.name]: [e.target.value] }));

@@ -12,9 +12,8 @@ import { BsFileEarmarkPostFill } from "react-icons/bs";
 
 const Profile = () => {
   const { currentUser } = useContext(AuthContext);
-  const userId = useLocation().pathname.split("/")[2];
-  const [openUpdate, setOpenUpdate] = useState(false);
   const [backToTop, setBackToTop] = useState(false);
+  const userId = useLocation().pathname.split("/")[2];
 
   // BUTTON SCROLL TO TOP
   useEffect(() => {

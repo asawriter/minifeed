@@ -71,6 +71,12 @@ const Navbar = () => {
                       <MdOutlineFeedback className="icon" />
                       <span>Dashboard</span>
                     </li>
+                    <Link className="link" to={`/feeds/${currentUser.id}/bookmark/all`}>
+                      <li>
+                        <MdOutlineFeedback className="icon" />
+                        <span>Bookmark</span>
+                      </li>
+                    </Link>
                     <li onClick={handleLogout}>
                       <MdOutlineLogout className="icon" />
                       <span>Logout</span>

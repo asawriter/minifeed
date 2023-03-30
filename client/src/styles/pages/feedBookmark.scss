@@ -1,0 +1,22 @@
+.bookmark {
+  h1 {
+  }
+
+  .container {
+    max-width: 1024px;
+    margin: 0 auto;
+    display: flex;
+    gap: 20px;
+
+    .bookmark-left {
+      flex: 1;
+      background-color: green;
+      height: fit-content;
+    }
+
+    .bookmark-right {
+      flex: 2;
+      background-color: white;
+    }
+  }
+}

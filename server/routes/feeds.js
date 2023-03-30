@@ -3,16 +3,16 @@ import {
   createFeed,
   getAllFeeds,
   removeFeed,
-  getSavedFeed,
-  addSavedFeed,
-  removeSavedFeed,
-  getSavedFeeds,
+  bookmarkFeed,
+  unbookmarkFeed,
   getFeedByUserId,
   getFeedById,
   getSearchResults,
   createLike,
   deleteLike,
   getLikesByFeedId,
+  getFeedsBookmarkByUserId,
+  getOneFeedBookmark,
 } from "../controllers/index.js";
 const router = Router();
 
@@ -34,12 +34,11 @@ router.post("/:feedId/like", createLike);
 
 router.post("/:feedId/unlike", deleteLike);
 
-router.put("/saved/:feedId", addSavedFeed);
+router.post("/:feedId/bookmark", bookmarkFeed);
 
-router.delete("/saved/:feedId", removeSavedFeed);
+router.post("/:feedId/unbookmark", unbookmarkFeed);
 
-router.get("/saved", getSavedFeed);
+router.get("/:userId/bookmark/all", getFeedsBookmarkByUserId)
 
-router.get("/saved/all/:userId", getSavedFeeds);
-
+router.get("/bookmark", getOneFeedBookmark)
 export default router;

@@ -25,27 +25,6 @@ export const GetFeedDetails = (QUERY_KEY, feedId, titleURL) => {
   }
 };
 
-// GET FEED SAVED
-export const GetFeedSaveds = (QUERY_KEY) => {
-  try {
-    return useQuery([QUERY_KEY], () =>
-      makeRequest.get(`/feeds/saved`).then((res) => res.data.savedFeeds)
-    );
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const GetSaved = (QUERY_KEY) => {
-  try {
-    return useQuery([QUERY_KEY], () =>
-      makeRequest.get(`/feeds/saved`).then((res) => res.data.saved)
-    );
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 // GET FEED OF PROFILE
 export const GetFeedProfiles = (QUERY_KEY, userId) => {
   try {
@@ -81,23 +60,47 @@ export const RemoveFeed = (feedId, successMessage) => {
   }
 };
 
-// ADD FEED SAVED
-export const AddSavedFeed = (successMessage, feedId, saveFeed) => {
+// GET EVERY FEED BOOKMARKED
+export const GetFeedsBookmark = (QUERY_KEY, feedId) => {
   try {
-    return makeRequest
-      .put(`/feeds/saved/${feedId}`, { saved: saveFeed })
-      .then((res) => res.status === 200 && successMessage(res.data.message));
+    return useQuery([QUERY_KEY, feedId], () =>
+      makeRequest.get(`/feeds/bookmark?feedId=${feedId}`).then((res) => res.data.feedsBookmark)
+    );
   } catch (error) {
     console.log(error);
   }
 };
 
-// REMOVE FEED SAVED
-export const RemoveSavedFeed = (successMessage, feedId) => {
+// GET ALL FEEDS BOOKMARKED
+export const GetAllFeedsBookmark = (QUERY_KEY, userId) => {
   try {
-    return makeRequest
-      .delete(`/feeds/saved/${feedId}`)
-      .then((res) => res.status === 200 && successMessage(res.data.message));
+    return useQuery([QUERY_KEY], () =>
+      makeRequest.get(`/feeds/${userId}/bookmark/all`).then((res) => res.data.feedsBookmark)
+    );
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// ADD FEED BOOKMARK
+export const AddBookmark = (userId, feedId) => {
+  console.log(userId, feedId);
+  try {
+    return makeRequest.post(`/feeds/${userId}/bookmark`, {
+      userBookmarked : userId,
+      feedBookmarked : feedId
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// UN BOOKMARK
+export const RemoveBookmark = (userId, feedId) => {
+  try {
+    return makeRequest.post(`/feeds/${feedId}/unbookmark`, {
+      userBookmarked : userId,
+    });
   } catch (error) {
     console.log(error);
   }

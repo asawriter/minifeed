@@ -1,12 +1,9 @@
 import { useLocation } from "react-router-dom";
-
 import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../context/AuthContext.js";
 import CreateComment from "../components/CreateComment";
-
 import { GetFeedDetails } from "../services/fetch";
 import { scrollUp } from "../services/BackToTop";
-
 import FeedRightDetail from "./FeedDetails/FeedRightDetail";
 import FeedImage from "../components/Feed/FeedImage";
 import FeedInfo from "../components/Feed/FeedInfo";
