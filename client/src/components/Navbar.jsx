@@ -9,6 +9,7 @@ import {
   MdOutlineLogout,
   MdOutlineAccountCircle,
 } from "react-icons/md";
+import Search from "./SearchBar";
 
 const Navbar = () => {
   const { currentUser, setCurrentUser } = useContext(AuthContext);
@@ -29,10 +30,7 @@ const Navbar = () => {
           <Link className="link" to="/">
             <p>MiniFeed.</p>
           </Link>
-          <div className="searchContainer">
-            <BiSearch style={{ fontSize: "20px", marginRight: "8px" }} />
-            <input type="text" placeholder="Search MiniFeed" />
-          </div>
+          <Search />
         </div>
 
         <div className="right">

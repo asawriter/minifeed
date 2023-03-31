@@ -14,8 +14,6 @@ const FeedBookmark = () => {
     currentUser.id
   );
 
-  console.log(data);
-
   return (
     <div className="bookmark">
       <h1>Bookmark For {currentUser.name}</h1>

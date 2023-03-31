@@ -2,7 +2,7 @@ import { useLocation } from "react-router-dom";
 import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../context/AuthContext.js";
 import CreateComment from "../components/CreateComment";
-import { GetFeedDetails } from "../services/fetch";
+import {GetComments, GetFeedDetails} from "../services/fetch";
 import { scrollUp } from "../services/BackToTop";
 import FeedRightDetail from "./FeedDetails/FeedRightDetail";
 import FeedImage from "../components/Feed/FeedImage";
@@ -42,6 +42,9 @@ const FeedDetails = () => {
   // GET DATA
   const { isLoading, data, error } = GetFeedDetails("feed", feedId, titleURL);
 
+  // GET LIST COMMENTS OF FEED
+  const {isLoading: loadingCm, data: dataCm, error: errorCm} = GetComments("comments", feedId)
+
   return (
     <div className="feedDetails">
       {backToTop && (
@@ -60,6 +63,7 @@ const FeedDetails = () => {
               feedId={feedId}
               titleURL={titleURL}
               scrollToCm={scrollToCm}
+              numCm={dataCm?.length}
             />
 
             <div className="center">
@@ -89,7 +93,7 @@ const FeedDetails = () => {
                 />
               </div>
 
-              <ListComment feedId={feedId} />
+              <ListComment isLoading={loadingCm} data={dataCm} error={errorCm} />
             </div>
 
             <FeedRightDetail

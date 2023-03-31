@@ -46,7 +46,20 @@ export const getFeedById = async (req, res, next) => {
 };
 
 // SEARCH
-export const getSearchResults = async (req, res, next) => {};
+export const getSearchResults = async (req, res, next) => {
+  try {
+    const { title } = req.query;
+    const [feeds] = await db.query(
+      "Select name, avatar, content, image, title, feeds.created_at as feedCreated, author, feeds.id as feedId from users join feeds on users.id = feeds.author where title like '%" +
+        title +
+        "%'"
+    );
+
+    return res.status(200).json({ message: "Result search", feeds });
+  } catch (error) {
+    return next(error);
+  }
+};
 
 // CREATE NEW FEED
 export const createFeed = async (req, res, next) => {

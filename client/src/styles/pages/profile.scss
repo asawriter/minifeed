@@ -51,6 +51,7 @@
           font-weight: bold;
           background-color: blueviolet;
           margin-right: 18px;
+          border: 1px solid blueviolet;
         }
 
         .icon {
@@ -119,6 +120,40 @@
 
             &:last-child {
               margin-bottom: unset;
+            }
+          }
+        }
+
+        h2 {
+          margin: 20px 0 10px 0;
+        }
+
+        .listFriend {
+          border-radius: 10px;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 50px;
+          background-color: white;
+          padding: 20px;
+          flex: 3;
+
+          .item {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            gap: 4px;
+
+            img {
+              width: 60px;
+              height: 60px;
+              object-fit: cover;
+              border-radius: 50%;
+            }
+
+            p {
+              font-weight: 600;
+              font-size: 14px;
             }
           }
         }

@@ -9,6 +9,8 @@ import Feed from "../components/Feed";
 import { VscComment } from "react-icons/vsc";
 import { CiHashtag } from "react-icons/ci";
 import { BsFileEarmarkPostFill } from "react-icons/bs";
+import FollowButton from "../components/FollowButton";
+import ListFriend from "../components/ListFriend";
 
 const Profile = () => {
   const { currentUser } = useContext(AuthContext);
@@ -59,7 +61,7 @@ const Profile = () => {
                     </Link>
                   </button>
                 ) : (
-                  <button>Follow</button>
+                  <FollowButton userId={userId} />
                 )}
                 <BsThreeDots className="icon" />
               </div>
@@ -68,7 +70,11 @@ const Profile = () => {
                 alt=""
               />
               <h1>{data.name}</h1>
-              <UserInfo bio={data.bio} createdUser={data.created_at} />
+              <UserInfo
+                bio={data.bio}
+                createdUser={data.created_at}
+                userId={userId}
+              />
             </div>
 
             <div className="userContent">
@@ -87,6 +93,12 @@ const Profile = () => {
                     <span>11 tags followed</span>
                   </li>
                 </ul>
+                {currentUser.id === userId && (
+                  <>
+                    <h2>List Following</h2>
+                    <ListFriend />
+                  </>
+                )}
               </div>
               <div className="right">
                 {feedLoading ? (

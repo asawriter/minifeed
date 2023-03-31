@@ -1,0 +1,22 @@
+.searchResult {
+  h1 {
+  }
+
+  .container {
+    max-width: 1024px;
+    margin: 0 auto;
+    display: flex;
+    gap: 20px;
+
+    .search-left {
+      flex: 1;
+      background-color: green;
+      height: fit-content;
+    }
+
+    .search-right {
+      flex: 2;
+      background-color: white;
+    }
+  }
+}

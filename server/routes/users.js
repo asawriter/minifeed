@@ -2,20 +2,22 @@ import { Router } from "express";
 const router = Router();
 import {
   getUserById,
-  updateUser,
-  getBookmarks,
+  updateUser, 
   followUser,
   unFollowUser,
+  getFollowedUser,
 } from "../controllers/index.js";
 
 router.get("/:userId", getUserById);
 
 router.patch("/:userId", updateUser);
 
-router.get("/:userId/bookmarks", getBookmarks);
+// router.get("/:userId/bookmarks", getBookmarks);
 
-router.put("/follow", followUser);
+router.get("/:userId/follows", getFollowedUser)
 
-router.put("/unfollow", unFollowUser);
+router.post("/follow", followUser);
+
+router.post("/unfollow", unFollowUser);
 
 export default router;

@@ -64,7 +64,9 @@ export const RemoveFeed = (feedId, successMessage) => {
 export const GetFeedsBookmark = (QUERY_KEY, feedId) => {
   try {
     return useQuery([QUERY_KEY, feedId], () =>
-      makeRequest.get(`/feeds/bookmark?feedId=${feedId}`).then((res) => res.data.feedsBookmark)
+      makeRequest
+        .get(`/feeds/bookmark?feedId=${feedId}`)
+        .then((res) => res.data.feedsBookmark)
     );
   } catch (error) {
     console.log(error);
@@ -75,7 +77,9 @@ export const GetFeedsBookmark = (QUERY_KEY, feedId) => {
 export const GetAllFeedsBookmark = (QUERY_KEY, userId) => {
   try {
     return useQuery([QUERY_KEY], () =>
-      makeRequest.get(`/feeds/${userId}/bookmark/all`).then((res) => res.data.feedsBookmark)
+      makeRequest
+        .get(`/feeds/${userId}/bookmark/all`)
+        .then((res) => res.data.feedsBookmark)
     );
   } catch (error) {
     console.log(error);
@@ -87,8 +91,8 @@ export const AddBookmark = (userId, feedId) => {
   console.log(userId, feedId);
   try {
     return makeRequest.post(`/feeds/${userId}/bookmark`, {
-      userBookmarked : userId,
-      feedBookmarked : feedId
+      userBookmarked: userId,
+      feedBookmarked: feedId,
     });
   } catch (error) {
     console.log(error);
@@ -99,8 +103,19 @@ export const AddBookmark = (userId, feedId) => {
 export const RemoveBookmark = (userId, feedId) => {
   try {
     return makeRequest.post(`/feeds/${feedId}/unbookmark`, {
-      userBookmarked : userId,
+      userBookmarked: userId,
     });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// SEARCH FOR TITLE
+export const SearchFeedByTitle = (QUERY_KEY, value) => {
+  try {
+    return useQuery([QUERY_KEY, value], () =>
+      makeRequest.get(`/feeds/search?title=${value}`).then((res) => res.data.feeds)
+    );
   } catch (error) {
     console.log(error);
   }

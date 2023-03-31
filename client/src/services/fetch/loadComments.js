@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 // GET ALL COMMENTS OF FEED
 export const GetComments = (QUERY_KEY, feedId) => {
   try {
-    return useQuery([QUERY_KEY], () =>
+    return useQuery([QUERY_KEY, feedId], () =>
       makeRequest.get(`/comments/${feedId}`).then((res) => res.data.comments)
     );
   } catch (error) {

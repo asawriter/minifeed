@@ -22,7 +22,7 @@ router.get("/user/:userId", getFeedByUserId);
 
 router.get("/:titleURL/:feedId", getFeedById);
 
-router.get("/search?", getSearchResults);
+router.get("/search", getSearchResults);
 
 router.post("/", createFeed);
 

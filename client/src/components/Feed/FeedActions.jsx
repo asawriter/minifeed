@@ -16,7 +16,7 @@ import {
   RemoveLiked,
 } from "../../services/fetch/loadLikes";
 
-const FeedActions = ({ feedId, titleURL, scrollToCm }) => {
+const FeedActions = ({ feedId, titleURL, scrollToCm, numCm}) => {
   const { currentUser } = useContext(AuthContext);
   const queryClient = useQueryClient();
 
@@ -86,7 +86,7 @@ const FeedActions = ({ feedId, titleURL, scrollToCm }) => {
           </li>
           <li>
             <VscComment className="f-icon" onClick={scrollToCm} />
-            <span>6 {!titleURL && "comments"}</span>
+            <span>{numCm?.length} {!titleURL && "comments"}</span>
           </li>
           <li className="actionSaved">
             {loadingBookmark ? (
