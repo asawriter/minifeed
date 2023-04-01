@@ -65,6 +65,7 @@ const Profile = () => {
                 )}
                 <BsThreeDots className="icon" />
               </div>
+
               <img
                 src={"/images/" + (data.avatar || "default_avatar.png")}
                 alt=""

@@ -1,6 +1,6 @@
 import "./styles/index.scss"
 import { BrowserRouter, Routes, Route, Outlet, Navigate } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "./context/AuthContext";
 import { ToastContainer } from "react-toastify";
 import Home from "./pages/Home";

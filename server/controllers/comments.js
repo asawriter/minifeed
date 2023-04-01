@@ -3,14 +3,14 @@ import { v4 as generateID } from "uuid";
 
 export const createComment = async (req, res, next) => {
   try {
-    const { content, parentFeed, author } = req.body;
+    const { content, parentFeed, author, parentId } = req.body;
 
     if (!content) return res.status(400).json({ message: "Invalid comment." });
 
-    const values = [generateID(), content, parentFeed, author];
+    const values = [generateID(), content, parentFeed, author, parentId];
 
     await db.query(
-      "Insert into comments (`id`, `content`, `parentFeed`, `author`) values (?)",
+      "Insert into comments (`id`, `content`, `parentFeed`, `author`, `parentId`) values (?)",
       [values]
     );
 
@@ -23,7 +23,7 @@ export const createComment = async (req, res, next) => {
 export const getCommentsByFeedId = async (req, res, next) => {
   try {
     const [comments] = await db.query(
-      "Select name, avatar, comments.id as commentId, content, comments.created_at as createdComment from users join comments on users.id = comments.author where parentFeed = ? order by comments.created_at desc",
+      "Select name, avatar, parentId, author, parentFeed, comments.id as commentId, content, comments.created_at as createdComment from users join comments on users.id = comments.author where parentFeed = ? order by comments.created_at desc",
       [req.params.feedId]
     );
 
@@ -35,3 +35,5 @@ export const getCommentsByFeedId = async (req, res, next) => {
     return next(error);
   }
 };
+
+

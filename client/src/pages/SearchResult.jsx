@@ -11,7 +11,7 @@ const SearchResult = () => {
 
   return (
     <div className="searchResult">
-      <h1>Search :</h1>
+      <p className="searchHeader">Search for <span>{searchValue}</span></p>
       <div className="container">
         <div className="search-left"></div>
 

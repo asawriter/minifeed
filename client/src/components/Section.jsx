@@ -30,10 +30,10 @@ const Section = () => {
                 <span>Create Post</span>
               </li>
             </Link>
-            <Link to={`/saved/feeds/${currentUser.userId}`} className="link">
+            <Link to={`/feeds/${currentUser.id}/bookmark/all`} className="link">
               <li>
                 <RxBookmark className="icon"/>
-                <span>Saved Feeds</span>
+                <span>Bookmarks</span>
               </li>
             </Link>
           </ul>

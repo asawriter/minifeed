@@ -53,7 +53,9 @@ const EditProfile = () => {
 
   return (
     <div className="editProfile">
-      <h1>Edit For {currentUser.name}</h1>
+      <h1>
+        Edit For <span>{currentUser.name}</span>
+      </h1>
       <div className="container">
         <div className="left"></div>
         <div className="right">

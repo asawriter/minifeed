@@ -18,7 +18,7 @@ const FeedRightDetail = ({ author, name, createdUser, bio, avatar }) => {
         </Link>
         {currentUser.id === author ? (
           <button>
-            <Link className="link" to={`/users/${author}/edit`}>
+            <Link className="link" to={`/users/${currentUser.id}/edit`}>
               Edit Profile
             </Link>
           </button>

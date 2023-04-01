@@ -3,14 +3,17 @@ import { SearchFeedByTitle } from "../services/fetch/loadFeeds";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { SearchContext } from "../context/SearchContext";
+import { useState } from "react";
 
 const SearchBar = () => {
+  const [value, setValue] = useState("")
   const { searchValue, setSearchValue, setSearchResult } =
     useContext(SearchContext);
 
   const { isLoading, data, error } = SearchFeedByTitle("searchs", searchValue);
 
   const handleSearch = () => {
+    setSearchValue(value)
     setSearchResult(data);
   };
 
@@ -19,8 +22,9 @@ const SearchBar = () => {
       <input
         type="text"
         placeholder="Search MiniFeed"
-        value={searchValue}
-        onChange={(e) => setSearchValue(e.target.value)}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        onKeyDown={handleSearch}
       />
       <Link className="link" to={`/feeds/search?title=${searchValue}`}>
         <BiSearch

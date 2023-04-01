@@ -11,3 +11,11 @@ export const GetComments = (QUERY_KEY, feedId) => {
     console.log(error);
   }
 };
+
+export const GetReplyComments = (comments, commentId) => {
+  try {
+    return comments && comments.filter((c) => c.parentId === commentId);
+  } catch (error) {
+    console.log(error);
+  }
+};

@@ -19,7 +19,8 @@ const FeedDetails = () => {
 
   const scrollRef = useRef();
 
-  const scrollToCm = () => {
+  const scrollToCm = (e) => {
+    console.log(e)
     let heightToElement = scrollRef.current?.getBoundingClientRect().bottom - 306;
 
     window.scrollTo({
@@ -42,9 +43,6 @@ const FeedDetails = () => {
   // GET DATA
   const { isLoading, data, error } = GetFeedDetails("feed", feedId, titleURL);
 
-  // GET LIST COMMENTS OF FEED
-  const {isLoading: loadingCm, data: dataCm, error: errorCm} = GetComments("comments", feedId)
-
   return (
     <div className="feedDetails">
       {backToTop && (
@@ -63,7 +61,6 @@ const FeedDetails = () => {
               feedId={feedId}
               titleURL={titleURL}
               scrollToCm={scrollToCm}
-              numCm={dataCm?.length}
             />
 
             <div className="center">
@@ -93,7 +90,7 @@ const FeedDetails = () => {
                 />
               </div>
 
-              <ListComment isLoading={loadingCm} data={dataCm} error={errorCm} />
+              <ListComment feedId={feedId} />
             </div>
 
             <FeedRightDetail

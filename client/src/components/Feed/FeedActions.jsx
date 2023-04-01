@@ -7,6 +7,7 @@ import { VscComment } from "react-icons/vsc";
 import { AuthContext } from "../../context/AuthContext";
 import {
   AddBookmark,
+  GetComments,
   GetFeedsBookmark,
   RemoveBookmark,
 } from "../../services/fetch";
@@ -62,6 +63,9 @@ const FeedActions = ({ feedId, titleURL, scrollToCm, numCm}) => {
     mutaionBookmarked.mutate(dataBookmark?.includes(currentUser.id));
   };
 
+  // GET COMMENTS OF FEED
+  const {isLoading: loadingCm, data: dataCm, error: errorCm} = GetComments("comments", feedId)
+
   return (
     <div className="actions">
       <div className="left">
@@ -86,7 +90,7 @@ const FeedActions = ({ feedId, titleURL, scrollToCm, numCm}) => {
           </li>
           <li>
             <VscComment className="f-icon" onClick={scrollToCm} />
-            <span>{numCm?.length} {!titleURL && "comments"}</span>
+            <span>{dataCm?.length} {!titleURL && "comments"}</span>
           </li>
           <li className="actionSaved">
             {loadingBookmark ? (

@@ -2,7 +2,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
 import makeRequest from "../services/makeRequest";
 
-const CreateComment = ({ parentFeed, author, typeBtn }) => {
+const CreateComment = ({ parentFeed, author, typeBtn, parentId = null, setOpenReplyCm, setShowReplyCm }) => {
+  console.log(parentId)
   const [content, setContent] = useState("");
   const queryClient = useQueryClient();
 
@@ -18,8 +19,10 @@ const CreateComment = ({ parentFeed, author, typeBtn }) => {
   const handleComment = (e) => {
     e.preventDefault();
 
-    mutaion.mutate({ content, parentFeed, author });
+    mutaion.mutate({ content, parentFeed, author, parentId });
     setContent("");
+    setOpenReplyCm(false);
+    setShowReplyCm(true);
   };
 
   return (
@@ -32,6 +35,7 @@ const CreateComment = ({ parentFeed, author, typeBtn }) => {
         placeholder="What are your thought?"
         value={content}
         onChange={(e) => setContent(e.target.value)}
+        autoFocus
       />
       <button onClick={handleComment}>{typeBtn}</button>
     </form>

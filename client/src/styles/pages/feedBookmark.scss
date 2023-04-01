@@ -1,5 +1,13 @@
 .bookmark {
-  h1 {
+  .bookmarHeader {
+    font-size: 30px;
+    margin: 20px 0 20px 226.4px;
+    font-weight: bold;
+
+    span {
+      font-size: 30px;
+      color: blueviolet;
+    }
   }
 
   .container {
@@ -10,8 +18,8 @@
 
     .bookmark-left {
       flex: 1;
-      background-color: green;
-      height: fit-content;
+      background-color: black;
+      height: 30px;
     }
 
     .bookmark-right {

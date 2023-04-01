@@ -1,4 +1,3 @@
-import { BiSearch } from "react-icons/bi";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
@@ -27,7 +26,7 @@ const Navbar = () => {
     <div className="navbar">
       <div className="container">
         <div className="left">
-          <Link className="link" to="/">
+          <Link className="link" to="/" >
             <p>MiniFeed.</p>
           </Link>
           <Search />
@@ -54,7 +53,7 @@ const Navbar = () => {
                     <Link to={`/users/${currentUser.id}`} className="link">
                       <li>
                         <MdOutlineAccountCircle className="icon" />
-                        <span>{currentUser.name}</span>
+                        <span style={{color : "blueviolet", fontWeight : "500"}}>{currentUser.name}</span>
                       </li>
                     </Link>
                     <li>

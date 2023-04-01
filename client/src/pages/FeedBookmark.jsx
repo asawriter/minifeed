@@ -16,9 +16,11 @@ const FeedBookmark = () => {
 
   return (
     <div className="bookmark">
-      <h1>Bookmark For {currentUser.name}</h1>
+      <p className="bookmarHeader">
+        Bookmark For <span>{currentUser.name}</span>
+      </p>
       <div className="container">
-        <div className="bookmark-left">left</div>
+        <div className="bookmark-left"></div>
         <div className="bookmark-right">
           {isLoading ? (
             <p>Loading...</p>
