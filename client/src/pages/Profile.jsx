@@ -3,14 +3,12 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { GetUserProfile, GetFeedProfiles } from "../services/fetch";
 import { scrollUp } from "../services/BackToTop";
-import UserInfo from "../components/UserInfo";
+import UserInfo from "../components/Profiles/UserInfo";
 import { BsThreeDots } from "react-icons/bs";
-import Feed from "../components/Feed";
-import { VscComment } from "react-icons/vsc";
-import { CiHashtag } from "react-icons/ci";
-import { BsFileEarmarkPostFill } from "react-icons/bs";
-import FollowButton from "../components/FollowButton";
-import ListFriend from "../components/ListFriend";
+import Feed from "../components/Feeds/Feed";
+import FollowButton from "../components/Profiles/FollowButton";
+import ListFriend from "../components/Profiles/ListFriend";
+import ProfileNumbers from "../components/Profiles/ProfileNumbers";
 
 const Profile = () => {
   const { currentUser } = useContext(AuthContext);
@@ -30,6 +28,7 @@ const Profile = () => {
 
   // GET DATA
   const { isLoading, data, error } = GetUserProfile("users", userId);
+
   const {
     isLoading: feedLoading,
     data: feedData,
@@ -80,24 +79,11 @@ const Profile = () => {
 
             <div className="userContent">
               <div className="left">
-                <ul>
-                  <li>
-                    <BsFileEarmarkPostFill className="icon" />
-                    <span>147 posts published</span>
-                  </li>
-                  <li>
-                    <VscComment className="icon" />
-                    <span>21 comments written</span>
-                  </li>
-                  <li>
-                    <CiHashtag className="icon" />
-                    <span>11 tags followed</span>
-                  </li>
-                </ul>
+                <ProfileNumbers />
                 {currentUser.id === userId && (
                   <>
                     <h2>List Following</h2>
-                    <ListFriend />
+                    <ListFriend userId={currentUser.id} />
                   </>
                 )}
               </div>

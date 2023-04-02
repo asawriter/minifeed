@@ -1,14 +1,14 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
-import { AuthContext } from "../context/AuthContext";
-import makeRequest from "../services/makeRequest";
 import {
   MdOutlineSettings,
   MdOutlineFeedback,
   MdOutlineLogout,
   MdOutlineAccountCircle,
 } from "react-icons/md";
-import Search from "./SearchBar";
+import { AuthContext } from "../../context/AuthContext";
+import makeRequest from "../../services/makeRequest";
+import SearchBar from "../SearchBar";
 
 const Navbar = () => {
   const { currentUser, setCurrentUser } = useContext(AuthContext);
@@ -26,10 +26,10 @@ const Navbar = () => {
     <div className="navbar">
       <div className="container">
         <div className="left">
-          <Link className="link" to="/" >
+          <Link className="link" to="/">
             <p>MiniFeed.</p>
           </Link>
-          <Search />
+          <SearchBar />
         </div>
 
         <div className="right">
@@ -53,7 +53,11 @@ const Navbar = () => {
                     <Link to={`/users/${currentUser.id}`} className="link">
                       <li>
                         <MdOutlineAccountCircle className="icon" />
-                        <span style={{color : "blueviolet", fontWeight : "500"}}>{currentUser.name}</span>
+                        <span
+                          style={{ color: "blueviolet", fontWeight: "500" }}
+                        >
+                          {currentUser.name}
+                        </span>
                       </li>
                     </Link>
                     <li>
@@ -68,7 +72,10 @@ const Navbar = () => {
                       <MdOutlineFeedback className="icon" />
                       <span>Dashboard</span>
                     </li>
-                    <Link className="link" to={`/feeds/${currentUser.id}/bookmark/all`}>
+                    <Link
+                      className="link"
+                      to={`/feeds/${currentUser.id}/bookmark/all`}
+                    >
                       <li>
                         <MdOutlineFeedback className="icon" />
                         <span>Bookmark</span>

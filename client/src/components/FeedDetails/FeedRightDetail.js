@@ -1,12 +1,15 @@
-import { useContext } from "react";
 import { Link } from "react-router-dom";
-import FollowButton from "../../components/FollowButton";
-import UserInfo from "../../components/UserInfo";
-import { AuthContext } from "../../context/AuthContext";
+import FollowButton from "../Profiles/FollowButton";
+import UserInfo from "../Profiles/UserInfo";
 
-const FeedRightDetail = ({ author, name, createdUser, bio, avatar }) => {
-  const { currentUser } = useContext(AuthContext);
-
+const FeedRightDetail = ({
+  author,
+  name,
+  createdUser,
+  bio,
+  avatar,
+  userId,
+}) => {
   return (
     <div className="right">
       <div className="info">
@@ -16,9 +19,9 @@ const FeedRightDetail = ({ author, name, createdUser, bio, avatar }) => {
             <span>{name}</span>
           </div>
         </Link>
-        {currentUser.id === author ? (
+        {userId === author ? (
           <button>
-            <Link className="link" to={`/users/${currentUser.id}/edit`}>
+            <Link className="link" to={`/users/${userId}/edit`}>
               Edit Profile
             </Link>
           </button>

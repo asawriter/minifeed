@@ -1,8 +1,8 @@
+import { GetAllFeeds } from "../../services/fetch";
 import Feed from "./Feed";
-import { GetAllFeeds } from "../services/fetch";
 
 const Feeds = () => {
-  const { isLoading, data, error } = GetAllFeeds("feeds")
+  const { isLoading, data, error } = GetAllFeeds("feeds");
 
   return (
     <div className="feeds">

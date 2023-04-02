@@ -1,6 +1,12 @@
-import "./styles/index.scss"
-import { BrowserRouter, Routes, Route, Outlet, Navigate } from "react-router-dom";
-import { useContext, useEffect } from "react";
+import "./styles/index.scss";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Outlet,
+  Navigate,
+} from "react-router-dom";
+import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
 import { ToastContainer } from "react-toastify";
 import Home from "./pages/Home";
@@ -9,10 +15,10 @@ import Profile from "./pages/Profile";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import CreatePost from "./pages/CreatePost";
-import Navbar from "./components/Navbar";
 import EditProfile from "./pages/EditProfile";
 import FeedBookmark from "./pages/FeedBookmark";
 import SearchResult from "./pages/SearchResult";
+import Navbar from "./components/Navigations/Navbar";
 
 const App = () => {
   const { currentUser } = useContext(AuthContext);
@@ -30,9 +36,12 @@ const App = () => {
           <Route path="/feeds/:titleURL/:feedId" element={<FeedDetails />} />
           <Route path="/users/:userId" element={<Profile />} />
           <Route path="/create/post" element={<CreatePost />} />
-          <Route path="/users/:userId/edit" element={<EditProfile />}/>
-          <Route path="/feeds/:userId/bookmark/all" element={<FeedBookmark />}/>
-          <Route path="/feeds/search" element={<SearchResult />}/>
+          <Route path="/users/:userId/edit" element={<EditProfile />} />
+          <Route
+            path="/feeds/:userId/bookmark/all"
+            element={<FeedBookmark />}
+          />
+          <Route path="/feeds/search" element={<SearchResult />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />

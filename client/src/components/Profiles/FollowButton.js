@@ -1,10 +1,16 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useContext } from "react";
-import { AuthContext } from "../context/AuthContext";
-import { FollowUser, GetUsersFollowed, UnFollowUser } from "../services/fetch";
+import { AuthContext } from "../../context/AuthContext";
+import {
+  FollowUser,
+  GetUsersFollowed,
+  UnFollowUser,
+} from "../../services/fetch";
 
 const FollowButton = ({ userId }) => {
+  const queryClient = useQueryClient();
   const { currentUser } = useContext(AuthContext);
+
   // HANDLE FOLLOWED
   const { isLoading, data, error } = GetUsersFollowed(
     "follows",
@@ -12,8 +18,6 @@ const FollowButton = ({ userId }) => {
   );
 
   let dataFl = data?.map((d) => d.followed);
-
-  const queryClient = useQueryClient();
 
   const mutaion = useMutation(
     (follow) => {

@@ -1,11 +1,11 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import FeedActions from "../components/Feed/FeedActions";
-import FeedContent from "../components/Feed/FeedContent";
-import FeedImage from "../components/Feed/FeedImage";
-import FeedInfo from "../components/Feed/FeedInfo";
+import FeedContent from "../components/Feeds/FeedContent";
+import FeedImage from "../components/Feeds/FeedImage";
+import FeedInfo from "../components/Feeds/FeedInfo";
 import { AuthContext } from "../context/AuthContext";
 import { GetAllFeedsBookmark } from "../services/fetch";
+import FeedActions from "../components/FeadActions/FeedActions";
 
 const FeedBookmark = () => {
   const { currentUser } = useContext(AuthContext);

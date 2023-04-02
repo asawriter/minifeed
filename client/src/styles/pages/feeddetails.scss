@@ -37,6 +37,28 @@
 
           .actionSaved {
             display: flex;
+            position: relative;
+
+            .feedOptions {
+              position: absolute;
+              display: flex;
+              flex-direction: column;
+              background-color: white;
+              border-radius: 10px;
+              left: 50px;
+              width: 190px;
+
+              li {
+                display: unset;
+
+                &:hover {
+                  background-color: #efefef;
+                  color: blueviolet;
+                  cursor: pointer;
+                  transition: all 0.2s ease;
+                }
+              }
+            }
           }
 
           li {
@@ -54,9 +76,8 @@
                 color: blueviolet;
                 transition: all 0.2s ease;
               }
+              
             }
-
-           
           }
         }
       }

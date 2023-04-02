@@ -55,7 +55,7 @@ export const updateUser = async (req, res, next) => {
 export const getFollowedUser = async (req, res, next) => {
   try {
     const [followeds] = await db.query(
-      "Select followed, avatar, name from friends join users on friends.followed = users.id where follower = ?",
+      "Select followed, avatar, follower, name from friends join users on friends.followed = users.id where follower = ?",
       [req.params.userId]
     );
 

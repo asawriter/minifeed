@@ -1,9 +1,15 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import React, { useState } from "react";
-import makeRequest from "../services/makeRequest";
+import { useState } from "react";
+import makeRequest from "../../services/makeRequest";
 
-const CreateComment = ({ parentFeed, author, typeBtn, parentId = null, setOpenReplyCm, setShowReplyCm }) => {
-  console.log(parentId)
+const CreateComment = ({
+  parentFeed,
+  author,
+  typeBtn,
+  parentId = null,
+  setOpenReplyCm,
+  setShowReplyCm,
+}) => {
   const [content, setContent] = useState("");
   const queryClient = useQueryClient();
 
@@ -37,7 +43,9 @@ const CreateComment = ({ parentFeed, author, typeBtn, parentId = null, setOpenRe
         onChange={(e) => setContent(e.target.value)}
         autoFocus
       />
-      <button onClick={handleComment}>{typeBtn}</button>
+      <button type="button" onClick={handleComment} disabled={!content.length}>
+        {typeBtn}
+      </button>
     </form>
   );
 };

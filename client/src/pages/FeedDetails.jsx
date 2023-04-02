@@ -1,15 +1,15 @@
 import { useLocation } from "react-router-dom";
 import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../context/AuthContext.js";
-import CreateComment from "../components/CreateComment";
-import {GetComments, GetFeedDetails} from "../services/fetch";
+import CreateComment from "../components/Comments/CreateComment";
+import { GetFeedDetails } from "../services/fetch";
 import { scrollUp } from "../services/BackToTop";
-import FeedRightDetail from "./FeedDetails/FeedRightDetail";
-import FeedImage from "../components/Feed/FeedImage";
-import FeedInfo from "../components/Feed/FeedInfo";
-import FeedContent from "../components/Feed/FeedContent";
-import FeedActions from "../components/Feed/FeedActions";
+import FeedRightDetail from "../components/FeedDetails/FeedRightDetail";
+import FeedImage from "../components/Feeds/FeedImage";
+import FeedInfo from "../components/Feeds/FeedInfo";
+import FeedContent from "../components/Feeds/FeedContent";
 import ListComment from "../components/Comments/ListComment";
+import FeedActions from "../components/FeadActions/FeedActions.js";
 
 const FeedDetails = () => {
   const { currentUser } = useContext(AuthContext);
@@ -20,8 +20,9 @@ const FeedDetails = () => {
   const scrollRef = useRef();
 
   const scrollToCm = (e) => {
-    console.log(e)
-    let heightToElement = scrollRef.current?.getBoundingClientRect().bottom - 306;
+    console.log(e);
+    let heightToElement =
+      scrollRef.current?.getBoundingClientRect().bottom - 306;
 
     window.scrollTo({
       behavior: "smooth",
@@ -75,7 +76,11 @@ const FeedDetails = () => {
                     createdFeed={data.createdFeed}
                   />
 
-                  <FeedContent title={data.title} content={data.content} />
+                  <FeedContent
+                    title={data.title}
+                    content={data.content}
+                    titleURL={titleURL}
+                  />
                 </div>
               </div>
 
@@ -98,6 +103,7 @@ const FeedDetails = () => {
               author={data.author}
               name={data.name}
               createdUser={data.createdUser}
+              userId={currentUser.id}
             />
           </>
         )}

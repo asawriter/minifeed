@@ -1,15 +1,12 @@
-import { BiDotsVerticalRounded } from "react-icons/bi";
-import { RxBookmark, RxBookmarkFilled } from "react-icons/rx";
-import moment from "moment";
 import { Link } from "react-router-dom";
-import { useContext, useState } from "react";
-import { AuthContext } from "../context/AuthContext.js";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext.js";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { RemoveFeed } from "../services/fetch/loadFeeds.js";
-import FeedActions from "./Feed/FeedActions.jsx";
-import FeedImage from "./Feed/FeedImage.jsx";
-import FeedInfo from "./Feed/FeedInfo.jsx";
-import FeedContent from "./Feed/FeedContent.jsx";
+import { RemoveFeed } from "../../services/fetch/loadFeeds.js";
+import FeedImage from "../Feeds/FeedImage.js";
+import FeedInfo from "../Feeds/FeedInfo.js";
+import FeedContent from "../Feeds/FeedContent.js";
+import FeedActions from "../FeadActions/FeedActions.js";
 
 const Feed = ({ feed }) => {
   const { title, feedId, name, createdFeed, content, image, author, avatar } =
@@ -47,7 +44,7 @@ const Feed = ({ feed }) => {
 
           <FeedContent title={title} content={content} />
 
-          <FeedActions feedId={feedId}/>
+          <FeedActions feedId={feedId} />
         </div>
       </div>
     </Link>

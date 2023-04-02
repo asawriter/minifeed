@@ -1,10 +1,10 @@
 import { useContext } from "react";
 import { SearchContext } from "../context/SearchContext";
 import { Link } from "react-router-dom";
-import FeedImage from "../components/Feed/FeedImage";
-import FeedContent from "../components/Feed/FeedContent";
-import FeedInfo from "../components/Feed/FeedInfo";
-import FeedActions from "../components/Feed/FeedActions";
+import FeedImage from "../components/Feeds/FeedImage";
+import FeedContent from "../components/Feeds/FeedContent";
+import FeedInfo from "../components/Feeds/FeedInfo";
+import FeedActions from "../components/FeadActions/FeedActions";
 
 const SearchResult = () => {
   const { searchResult, searchValue } = useContext(SearchContext);
